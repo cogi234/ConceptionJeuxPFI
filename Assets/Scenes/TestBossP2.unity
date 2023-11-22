@@ -304,7 +304,7 @@ Transform:
   m_GameObject: {fileID: 526529119}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -49.8, y: 6.675, z: 6.49}
+  m_LocalPosition: {x: -49.8, y: 12.75, z: 45.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -417,6 +417,18 @@ PrefabInstance:
     - target: {fileID: 6400984831212755526, guid: 88744fd32ed9d8740a99c1be5938f18a, type: 3}
       propertyPath: m_Name
       value: BossPhase2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6932905072119888748, guid: 88744fd32ed9d8740a99c1be5938f18a, type: 3}
+      propertyPath: BPM
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6932905072119888748, guid: 88744fd32ed9d8740a99c1be5938f18a, type: 3}
+      propertyPath: blocParBPM
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6932905072119888748, guid: 88744fd32ed9d8740a99c1be5938f18a, type: 3}
+      propertyPath: vitesseBPM
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 9051450496583257575, guid: 88744fd32ed9d8740a99c1be5938f18a, type: 3}
       propertyPath: m_LocalPosition.x

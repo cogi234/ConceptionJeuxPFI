@@ -7,3 +7,5 @@ Navigation: minions
 Deformation de maillage: orbe fucker, ou shield qui perd des triangles
 Generation proceduralle: Terrain ou l'orbe fucker
 Behaviour tree: Boss
+
+2 Boss un fait par colin, un fait par anthony

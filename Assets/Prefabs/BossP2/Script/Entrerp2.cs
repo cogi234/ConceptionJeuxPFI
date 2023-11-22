@@ -17,11 +17,15 @@ public class Entrerp2 : MonoBehaviour
 
     BlocDownfall[] BlocDownfallListsTab = new BlocDownfall[0];
     BlocDownfall2[] BlocDownfallListsTab2 = new BlocDownfall2[0];
+    Animator animator;
+    AudioSource audioSource;
     int ListeRequis;
     // Start is called before the first frame update
     void Start()
     {
         Boss = GameObject.FindGameObjectWithTag("BossP2");
+        animator= Boss.GetComponent<Animator>();
+        audioSource = Boss.GetComponent<AudioSource>();
         BlocDownfallListsTab = Boss.GetComponentsInChildren<BlocDownfall>();
         BlocDownfallListsTab2 = Boss.GetComponentsInChildren<BlocDownfall2>();
         for (int i = 0; i < BlocDownfallListsTab.Length; i++)
@@ -53,10 +57,18 @@ public class Entrerp2 : MonoBehaviour
     int compteurAugmentation;
       int pointeur;
     bool reset =true;
+    bool finDeEntrer = false;
+    [SerializeField] float compteurAvantCri=0.5f;
+    float compteurCri;
+    bool triggerAnimation = true;
     private void Update()
     {
 
-        Debug.Log(BlocDownfallList2.Count);
+        if (!finDeEntrer)
+        {
+            
+        
+
         if (Tp)
         {
 
@@ -87,7 +99,11 @@ public class Entrerp2 : MonoBehaviour
 
 
                 }
-                vitesseBPM += 2;
+                if (vitesseBPM + 2 < 130)
+                {
+                    vitesseBPM += 2;
+                }
+               
 
                 if (BPM - 0.02f > 0.2f)
                 {
@@ -136,7 +152,10 @@ public class Entrerp2 : MonoBehaviour
 
 
                 }
-                vitesseBPM += 2;
+                if (vitesseBPM + 2 < 130)
+                {
+                    vitesseBPM += 2;
+                }
 
                 if (BPM - 0.02f > 0.2f)
                 {
@@ -156,12 +175,35 @@ public class Entrerp2 : MonoBehaviour
 
                 }
             }
+            else
+            {
+
+                ConteurBPM += Time.deltaTime;
+            }
 
 
 
 
         }
+        if(BlocDownfallList2.Count == 0 && BlocDownfallList.Count == 0)
+        {
+                if (triggerAnimation)
+                {
+                    animator.SetTrigger("DebutCri");
+                }
+            if(compteurCri> compteurAvantCri)
+            {
+                    audioSource.Play();
+                    finDeEntrer = true;
+            }
+            else
+            {
+                compteurCri+= Time.deltaTime;
+            }
+               
 
+        }
 
+        }
     }
 }

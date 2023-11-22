@@ -12,7 +12,7 @@ public class BlocDownfall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        audio = GetComponent<AudioSource>();
+        audio =  GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>();
         initial = new Vector3(transform.position.x,transform.position.y,transform.position.z);
     }
 

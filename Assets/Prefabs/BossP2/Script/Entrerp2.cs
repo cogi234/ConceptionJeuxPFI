@@ -10,7 +10,7 @@ using Unity.VisualScripting;
 public class Entrerp2 : MonoBehaviour
 {
     Random random = new Random();
-  
+ 
     GameObject Boss;
     List<BlocDownfall> BlocDownfallList = new List<BlocDownfall>();
     BlocDownfall[] BlocDownfallListsTab = new BlocDownfall[0];
@@ -42,6 +42,9 @@ public class Entrerp2 : MonoBehaviour
     [SerializeField] float BPM = 1;
     float ConteurBPM = 0;
     [SerializeField] float vitesseBPM = 10;
+    [SerializeField] int blocParBPM=5;
+    [SerializeField] int augmentationDuTauxNBDrop =1;
+    int compteurAugmentation;
     private void Update()
     {
 
@@ -61,16 +64,40 @@ public class Entrerp2 : MonoBehaviour
 
             if (ConteurBPM >= BPM)
             {
-                int pointeur;
-                pointeur = random.Next(0, BlocDownfallList.Count);
-                BlocDownfallList[pointeur].Tomber(vitesseBPM);
-                BlocDownfallList.Remove(BlocDownfallList[pointeur]);
-                ConteurBPM = 0;
+                for (int i = 0; i < blocParBPM && BlocDownfallList.Count != 0; i++)
+                {
+                    int pointeur;
+                    pointeur = random.Next(0, BlocDownfallList.Count);
+                 
+                    BlocDownfallList[pointeur].Tomber(vitesseBPM);
+                    BlocDownfallList.Remove(BlocDownfallList[pointeur]);
+                    ConteurBPM = 0;
+                    
+
+                }
                 vitesseBPM += 2;
-                BPM -= 0.02f;
+
+                if (BPM - 0.02f > 0.2f)
+                {
+                    BPM -= 0.02f;
+                }
+                else 
+                {
+                    if (compteurAugmentation > augmentationDuTauxNBDrop)
+                    {
+                        blocParBPM += 1;
+                        compteurAugmentation = 0;
+                    }
+                    else
+                    {
+                        compteurAugmentation++;
+                    }
+                       
+                }
             }
             else
             {
+
                 ConteurBPM += Time.deltaTime;
             }
         }

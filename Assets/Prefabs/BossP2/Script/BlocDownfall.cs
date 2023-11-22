@@ -8,9 +8,11 @@ public class BlocDownfall : MonoBehaviour
     Vector3 initial;
     float speed;
     bool Tombers = false;
+    AudioSource audio;
     // Start is called before the first frame update
     void Start()
     {
+        audio = GetComponent<AudioSource>();
         initial = new Vector3(transform.position.x,transform.position.y,transform.position.z);
     }
 
@@ -20,7 +22,12 @@ public class BlocDownfall : MonoBehaviour
 
         if (Tombers)
         {
-            gameObject.transform.Translate(-transform.up * speed * Time.deltaTime, Space.World);
+            gameObject.transform.Translate(new Vector3(0,-1,0) * speed * Time.deltaTime, Space.World);
+            if (transform.position.y< initial.y) {
+                transform.position = initial;
+                Tombers = !Tombers;
+                audio.Play();
+            }
         }
     }
 

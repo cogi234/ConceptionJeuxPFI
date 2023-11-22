@@ -32,29 +32,50 @@ public class Entrerp2 : MonoBehaviour
       
     }
 
-    bool tomber = true;
+    bool Tp = true;
     BlocDownfall chute;
 
     private void Awake()
     {
 
-        if (tomber)
+        
+    }
+
+    [SerializeField] float BPM = 1;
+    float ConteurBPM = 0;
+    [SerializeField] float vitesseBPM = 10;
+    private void Update()
+    {
+        if (Tp)
         {
 
             foreach (BlocDownfall t in BlocDownfallList)
             {
                 t.tp();
             }
-            tomber = false;
+            Tp = false;
         }
-    }
+        if (BlocDownfallList.Count != 0)
+        {
 
-    private void Update()
-    {
-        int pointeur;
-        pointeur = random.Next(0, BlocDownfallList.Count);
 
-        
+            if (ConteurBPM >= BPM)
+            {
+                int pointeur;
+                pointeur = random.Next(0, BlocDownfallList.Count);
+                BlocDownfallList[pointeur].Tomber(vitesseBPM);
+                BlocDownfallList.Remove(BlocDownfallList[pointeur]);
+                ConteurBPM = 0;
+                vitesseBPM += 2;
+                BPM -= 0.02f;
+            }
+            else
+            {
+                ConteurBPM += Time.deltaTime;
+            }
+        }
+
+
 
 
     }

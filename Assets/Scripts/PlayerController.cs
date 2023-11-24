@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     [SerializeField] float groundAcceleration;
     [SerializeField] float airAcceleration;
-    [SerializeField] float maxSpeed;
     [SerializeField] float sprintMultiplier;
     [SerializeField] float initialJumpForce;
     [SerializeField] float continuousJumpForce;
@@ -28,25 +27,11 @@ public class PlayerController : MonoBehaviour
     float cameraAngle = 0;
 
     public bool Grounded {  get; private set; }
-    bool Sprinting { 
-        get => sprinting;
-        set 
-        { 
-            sprinting = value;
-            //We change our max speed depending on if we're running
-            if (sprinting)
-                rb.maxLinearVelocity = maxSpeed * sprintMultiplier;
-            else
-                rb.maxLinearVelocity = maxSpeed;
-        }
-    }
-
 
     private void Awake()
     {
         //Setup rigidbody
         rb = GetComponent<Rigidbody>();
-        rb.maxLinearVelocity = maxSpeed;
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -59,7 +44,7 @@ public class PlayerController : MonoBehaviour
         playerInput.FindAction("Attack");
         playerInput.FindAction("Jump").performed += (InputAction.CallbackContext action) => jumping = true;
         playerInput.FindAction("Jump").canceled += (InputAction.CallbackContext action) => jumping = false;
-        playerInput.FindAction("Sprint").performed += (InputAction.CallbackContext action) => Sprinting = true;
+        playerInput.FindAction("Sprint").performed += (InputAction.CallbackContext action) => sprinting = true;
     }
 
     private void LookCall(InputAction.CallbackContext action)
@@ -74,7 +59,7 @@ public class PlayerController : MonoBehaviour
         Vector2 temp = action.ReadValue<Vector2>();
         moveDirection = new Vector3(temp.x, 0, temp.y);
         if (moveDirection.z <= 0)
-            Sprinting = false;
+            sprinting = false;
     }
 
     private void FixedUpdate()
@@ -96,8 +81,10 @@ public class PlayerController : MonoBehaviour
 
         //Move
         if (Grounded)
-            rb.AddForce((transform.localToWorldMatrix * moveDirection.normalized) * groundAcceleration, ForceMode.Acceleration);
+            rb.AddForce((transform.localToWorldMatrix * moveDirection.normalized) * groundAcceleration * (sprinting ? sprintMultiplier : 1), ForceMode.Acceleration);
         else
-            rb.AddForce((transform.localToWorldMatrix * moveDirection.normalized) * airAcceleration, ForceMode.Acceleration);
+            rb.AddForce((transform.localToWorldMatrix * moveDirection.normalized) * airAcceleration * (sprinting ? sprintMultiplier : 1), ForceMode.Acceleration);
+
+        Debug.Log(rb.velocity.magnitude);
     }
 }

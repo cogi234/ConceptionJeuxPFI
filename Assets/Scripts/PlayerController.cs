@@ -9,7 +9,10 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     [SerializeField] float groundAcceleration;
     [SerializeField] float airAcceleration;
+    [SerializeField] float maxSpeed;
     [SerializeField] float sprintMultiplier;
+    [SerializeField] float groundStopDamping;
+    [SerializeField] float groundStopTreshold;
     [SerializeField] float initialJumpForce;
     [SerializeField] float continuousJumpForce;
     [Header("Camera")]
@@ -26,7 +29,7 @@ public class PlayerController : MonoBehaviour
     bool jumping = false;
     float cameraAngle = 0;
 
-    public bool Grounded {  get; private set; }
+    public bool Grounded { get; private set; }
 
     private void Awake()
     {
@@ -70,6 +73,11 @@ public class PlayerController : MonoBehaviour
         if (Grounded && !wasGrounded)
             jumping = false;
 
+        if (Grounded)
+            rb.maxLinearVelocity = maxSpeed * (sprinting ? sprintMultiplier : 1);
+        else
+            rb.maxLinearVelocity = float.MaxValue;
+
         //Jump
         if (jumping)
         {
@@ -85,6 +93,11 @@ public class PlayerController : MonoBehaviour
         else
             rb.AddForce((transform.localToWorldMatrix * moveDirection.normalized) * airAcceleration * (sprinting ? sprintMultiplier : 1), ForceMode.Acceleration);
 
-        Debug.Log(rb.velocity.magnitude);
+        if (Grounded && moveDirection.magnitude < groundStopTreshold)
+        {
+            Vector3 dampForce = -rb.velocity * groundStopDamping;
+            dampForce.y = 0;
+            rb.AddForce(dampForce);
+        }
     }
 }

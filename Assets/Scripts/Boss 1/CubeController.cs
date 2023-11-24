@@ -38,7 +38,8 @@ public class CubeController : MonoBehaviour
     void StayInPosition()
     {
         //Position
-        Vector3 diff = target.position - transform.position;
+        Vector3 positionDifference = target.position - transform.position;
+        Vector3 positionSpringForce = positionDifference * positionStiffness;
 
     }
 }

@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+namespace Anthony
+{
     public enum NodeState { Running, Success, Failure }
 
     public abstract class Node
@@ -120,230 +121,231 @@ using UnityEngine;
 
             return State;
         }
-  }
-public class cinématique : Node
-{
-
-    public cinématique() : base()
-    {
-        
     }
-
-    public override NodeState Evaluate()
+    public class cinématique : Node
     {
 
-        return State;
-    }
+        public cinématique() : base()
+        {
 
-}
-public class SurBoss : Node
-{
+        }
 
-    public SurBoss() : base()
-    {
+        public override NodeState Evaluate()
+        {
+
+            return State;
+        }
 
     }
-
-    public override NodeState Evaluate()
+    public class SurBoss : Node
     {
 
-        return State;
-    }
+        public SurBoss() : base()
+        {
 
-}
+        }
 
+        public override NodeState Evaluate()
+        {
 
-//Partie SolDesAttaque
-public class Distance : Node
-{
-
-    public Distance() : base()
-    {
+            return State;
+        }
 
     }
 
-    public override NodeState Evaluate()
+
+    //Partie SolDesAttaque
+    public class Distance : Node
     {
 
-        return State;
-    }
+        public Distance() : base()
+        {
 
-}
+        }
 
-public class WaitTime : Node
-{
+        public override NodeState Evaluate()
+        {
 
-    public WaitTime() : base()
-    {
-
-    }
-
-    public override NodeState Evaluate()
-    {
-
-        return State;
-    }
-
-}
-
-public class Missile : Node
-{
-
-    public Missile() : base()
-    {
+            return State;
+        }
 
     }
 
-    public override NodeState Evaluate()
+    public class WaitTime : Node
     {
 
-        return State;
-    }
+        public WaitTime() : base()
+        {
 
-}
-public class BoulleDeFeu : Node
-{
+        }
 
-    public BoulleDeFeu() : base()
-    {
+        public override NodeState Evaluate()
+        {
 
-    }
-
-    public override NodeState Evaluate()
-    {
-
-        return State;
-    }
-
-}
-
-//cac = corp a corp
-public class CAC : Node
-{
-
-    public CAC() : base()
-    {
+            return State;
+        }
 
     }
 
-    public override NodeState Evaluate()
+    public class Missile : Node
     {
 
-        return State;
+        public Missile() : base()
+        {
+
+        }
+
+        public override NodeState Evaluate()
+        {
+
+            return State;
+        }
+
     }
-
-}
-
-public class ShockWave : Node
-{
-
-    public ShockWave() : base()
+    public class BoulleDeFeu : Node
     {
 
-    }
+        public BoulleDeFeu() : base()
+        {
 
-    public override NodeState Evaluate()
-    {
+        }
 
-        return State;
-    }
+        public override NodeState Evaluate()
+        {
 
-}
-
-
-// Partie SurLeBoss des attaque
-
-public class Millieu : Node
-{
-
-    public Millieu() : base()
-    {
+            return State;
+        }
 
     }
 
-    public override NodeState Evaluate()
+    //cac = corp a corp
+    public class CAC : Node
     {
 
-        return State;
-    }
+        public CAC() : base()
+        {
 
-}
+        }
 
+        public override NodeState Evaluate()
+        {
 
-public class FallBlock : Node
-{
-
-    public FallBlock() : base()
-    {
-
-    }
-
-    public override NodeState Evaluate()
-    {
-
-        return State;
-    }
-
-}
-public class Spike : Node
-{
-
-    public Spike() : base()
-    {
+            return State;
+        }
 
     }
 
-    public override NodeState Evaluate()
+    public class ShockWave : Node
     {
 
-        return State;
-    }
+        public ShockWave() : base()
+        {
 
-}
+        }
 
-public class SurDos : Node
-{
+        public override NodeState Evaluate()
+        {
 
-    public SurDos() : base()
-    {
-
-    }
-
-    public override NodeState Evaluate()
-    {
-
-        return State;
-    }
-
-}
-
-public class BlockTrap : Node
-{
-
-    public BlockTrap() : base()
-    {
+            return State;
+        }
 
     }
 
-    public override NodeState Evaluate()
+
+    // Partie SurLeBoss des attaque
+
+    public class Millieu : Node
     {
 
-        return State;
+        public Millieu() : base()
+        {
+
+        }
+
+        public override NodeState Evaluate()
+        {
+
+            return State;
+        }
+
     }
 
-}
-public class SmallMissile : Node
-{
 
-    public SmallMissile() : base()
+    public class FallBlock : Node
     {
 
-    }
+        public FallBlock() : base()
+        {
 
-    public override NodeState Evaluate()
+        }
+
+        public override NodeState Evaluate()
+        {
+
+            return State;
+        }
+
+    }
+    public class Spike : Node
     {
 
-        return State;
+        public Spike() : base()
+        {
+
+        }
+
+        public override NodeState Evaluate()
+        {
+
+            return State;
+        }
+
     }
 
+    public class SurDos : Node
+    {
+
+        public SurDos() : base()
+        {
+
+        }
+
+        public override NodeState Evaluate()
+        {
+
+            return State;
+        }
+
+    }
+
+    public class BlockTrap : Node
+    {
+
+        public BlockTrap() : base()
+        {
+
+        }
+
+        public override NodeState Evaluate()
+        {
+
+            return State;
+        }
+
+    }
+    public class SmallMissile : Node
+    {
+
+        public SmallMissile() : base()
+        {
+
+        }
+
+        public override NodeState Evaluate()
+        {
+
+            return State;
+        }
+
+    }
 }

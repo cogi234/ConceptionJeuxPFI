@@ -3262,6 +3262,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Millieu
       objectReference: {fileID: 0}
+    - target: {fileID: 8862171694537051673, guid: 3784f6e93516bd242bae98fbc2fb1b2e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

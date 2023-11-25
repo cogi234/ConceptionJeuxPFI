@@ -3,15 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Anthony;
+//using Unity.VisualScripting;
 
 public class Bossp2Composant : MonoBehaviour
 {
-  
+    public SurBoss SurBoss;
+    public Distance distance;
     Node root;
+    GameObject joueur;
+    [SerializeField] float DistanceCac = 150;
+    
+    GameObject Boss;
 
     private void Awake()
     {
-       
+        Boss = GameObject.FindGameObjectWithTag("BossP2");
+        joueur = GameObject.FindGameObjectWithTag("Player");
         SetupTree();
     }
 
@@ -27,7 +34,7 @@ public class Bossp2Composant : MonoBehaviour
         Node BouleFeu = new BoulleDeFeu();
        Node Seq1Tire = new Sequence(new List<Node> { misile, BouleFeu });
         //distanceNode
-        Node distance = new Distance();
+        distance = new Distance(joueur.transform, Boss.transform, DistanceCac);
         Node Wait = new WaitTime();
         Node Seq2SolDistance = new Sequence(new List<Node> { distance, Wait, Seq1Tire });
         //CacSolNode
@@ -37,7 +44,7 @@ public class Bossp2Composant : MonoBehaviour
         //selector sol
         Node sel1Sol = new Selector(new List<Node>() { Seq2SolDistance, Seq3CacSol });
         // invertSurSol
-        Node SurBoss = new SurBoss();
+        SurBoss = new SurBoss();
         Node Invert1Sol = new Inverter(new List<Node> { SurBoss });
         //Sequencesol
         Node Seq4Sol = new Sequence(new List<Node> { Invert1Sol, sel1Sol });
@@ -84,6 +91,7 @@ public class Bossp2Composant : MonoBehaviour
 
     void Update()
     {
-        root.Evaluate();
+       // root.Evaluate();
     }
+   
 }

@@ -124,6 +124,7 @@ namespace Anthony
     }
     public class cinématique : Node
     {
+       public bool cinematique = false;
 
         public cinématique() : base()
         {
@@ -132,6 +133,11 @@ namespace Anthony
 
         public override NodeState Evaluate()
         {
+            State = NodeState.Failure;
+            if (cinematique)
+            {
+                State = NodeState.Success;
+            }
 
             return State;
         }
@@ -139,6 +145,7 @@ namespace Anthony
     }
     public class SurBoss : Node
     {
+        public bool JoueurSurBoss = false;
 
         public SurBoss() : base()
         {
@@ -147,6 +154,11 @@ namespace Anthony
 
         public override NodeState Evaluate()
         {
+            State = NodeState.Failure;
+            if (JoueurSurBoss)
+            {
+                State = NodeState.Success;
+            }
 
             return State;
         }
@@ -157,15 +169,25 @@ namespace Anthony
     //Partie SolDesAttaque
     public class Distance : Node
     {
-
-        public Distance() : base()
+        Transform joeur;
+        Transform boss;
+        float DistanceCac;
+        public Distance(Transform joeur, Transform boss, float DistanceCac) : base()
         {
-
+            this.joeur = joeur;
+            this.boss = boss;
+            this.DistanceCac = DistanceCac;
+       
         }
 
         public override NodeState Evaluate()
         {
-
+            State = NodeState.Failure;
+            if (Vector3.Distance(boss.position, joeur.position) >= DistanceCac)
+            {
+                State = NodeState.Success;
+            }
+           
             return State;
         }
 

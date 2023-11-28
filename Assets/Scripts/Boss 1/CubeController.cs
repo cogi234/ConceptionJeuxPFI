@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CubeController : MonoBehaviour
 {
-    public enum CubeAction { Nothing, GoToTarget }
+    public enum CubeAction { Nothing, GoToTarget, Transition }
 
     public Transform target;
     public Color Color { get => material.color; set => material.color = value; }
@@ -12,9 +12,14 @@ public class CubeController : MonoBehaviour
     [SerializeField] float positionStiffness;
     [SerializeField] float positionDamper;
     [SerializeField] float rotationStiffness, rotationDamper;
-
+    [Header("Transition")]
+    public float transitionTime;
+    
     Rigidbody rb;
     Material material;
+    float transitionTimer;
+    Vector3 originalPosition;
+    Quaternion originalRotation;
 
     private void Awake()
     {
@@ -28,14 +33,38 @@ public class CubeController : MonoBehaviour
         switch (currentAction)
         {
             case CubeAction.Nothing:
+                if (rb.isKinematic)
+                    rb.isKinematic = false;
                 break;
             case CubeAction.GoToTarget:
-                GoToTarget();
+                FixedGoToTarget();
+                break;
+            case CubeAction.Transition:
                 break;
         }
     }
-    void GoToTarget()
+    private void Update()
     {
+        switch (currentAction)
+        {
+            case CubeAction.Nothing:
+                break;
+            case CubeAction.GoToTarget:
+                break;
+            case CubeAction.Transition:
+                Transition();
+                break;
+        }
+    }
+
+    void FixedGoToTarget()
+    {
+        if (target == null)
+            return;
+
+        if (rb.isKinematic)
+            rb.isKinematic = false;
+
         //Position
         //Spring
         Vector3 positionDifference = target.position - transform.position;
@@ -79,5 +108,28 @@ public class CubeController : MonoBehaviour
         //Damper
         Vector3 rotationDamperForce = -rb.angularVelocity * rotationDamper;
         rb.AddTorque(rotationDamperForce, ForceMode.Force);
+    }
+
+    void Transition()
+    {
+        if (!rb.isKinematic)
+        {
+            GetComponent<Collider>().enabled = false;
+            rb.isKinematic = true;
+            transitionTimer = 0;
+            originalPosition = transform.position;
+            originalRotation = transform.rotation;
+        }
+
+        transform.position = Vector3.Lerp(originalPosition, target.position, transitionTimer / transitionTime);
+        transform.rotation = Quaternion.Lerp(originalRotation, target.rotation, transitionTimer / transitionTime);
+
+        transitionTimer += Time.deltaTime;
+        if (transitionTimer >= transitionTime)
+        {
+            currentAction = CubeAction.GoToTarget;
+            GetComponent<Collider>().enabled = false;
+            rb.isKinematic = false;
+        }
     }
 }

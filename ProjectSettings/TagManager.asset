@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - BossP2
+  - target
+  - core
   layers:
   - Default
   - TransparentFX

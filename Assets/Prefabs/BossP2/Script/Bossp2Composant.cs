@@ -12,7 +12,7 @@ public class Bossp2Composant : MonoBehaviour
     Node root;
     GameObject joueur;
     [SerializeField] float DistanceCac = 150;
-    
+    [SerializeField] float attente = 10;
     GameObject Boss;
 
     private void Awake()
@@ -35,12 +35,13 @@ public class Bossp2Composant : MonoBehaviour
        Node Seq1Tire = new Sequence(new List<Node> { misile, BouleFeu });
         //distanceNode
         distance = new Distance(joueur.transform, Boss.transform, DistanceCac);
-        Node Wait = new WaitTime();
-        Node Seq2SolDistance = new Sequence(new List<Node> { distance, Wait, Seq1Tire });
+        WaitTime Wait = new WaitTime(attente);
+        Node Seq2SolDistance = new Sequence(new List<Node> { distance, Wait });
         //CacSolNode
-        Node Cac = new CAC();
+       // Node Cac = new CAC();
+        Node inverterDistance = new Inverter(new List<Node> { distance});
         Node shokWave = new ShockWave();
-        Node Seq3CacSol = new Sequence(new List<Node> { Cac, Wait, shokWave });
+        Node Seq3CacSol = new Sequence(new List<Node> { inverterDistance, Wait });
         //selector sol
         Node sel1Sol = new Selector(new List<Node>() { Seq2SolDistance, Seq3CacSol });
         // invertSurSol
@@ -54,11 +55,11 @@ public class Bossp2Composant : MonoBehaviour
         //TrapdosSequence
         Node blockTrap = new BlockTrap();
         Node smalMisile = new SmallMissile();
-        Node Seq5Trap = new Sequence(new List<Node> { blockTrap, smalMisile });
+        Node Seq5SurDosTrap = new Sequence(new List<Node> { blockTrap, smalMisile });
 
         //surDosSequence
         Node  SurDos = new SurDos();
-        Node Seq6SurDos = new Sequence(new List<Node> { SurDos, Wait, Seq5Trap });
+        Node Seq6SurDos = new Sequence(new List<Node> { SurDos, Wait });
 
 
         //trapMillieuSequence
@@ -68,8 +69,9 @@ public class Bossp2Composant : MonoBehaviour
 
 
         //TrapMillieuSequence
-        Node Millieu = new Millieu();
-        Node Seq8Millieu= new Sequence(new List<Node> { Millieu, Wait, Seq7MillieuTrap });
+        //Node Millieu = new Millieu();
+        Node inverterMilieu = new Inverter(new List<Node> { SurDos });
+        Node Seq8Millieu= new Sequence(new List<Node> { inverterMilieu, Wait });
 
         //SelectorSurBoss
         Node SurBossSelector = new Selector(new List<Node>() { Seq8Millieu, Seq6SurDos });
@@ -77,9 +79,13 @@ public class Bossp2Composant : MonoBehaviour
         //SequenceSurBoss
         Node Seq9SurBoss = new Sequence(new List<Node> { SurBoss, SurBossSelector});
 
+        //phase d'attaque
+        Node SequenceAttaque = new SequenceAttaque(new List<Node> { Cinema, Seq1Tire,shokWave,Seq7MillieuTrap, Seq5SurDosTrap });
+
         //Root
-        Node RootSelector  =  new Selector(new List<Node>() { Cinema, Seq4Sol, Seq9SurBoss });
+        Node RootSelector  =  new Selector(new List<Node>() { SequenceAttaque, Seq4Sol, Seq9SurBoss });
         root = RootSelector;
+        Wait.MettreRoot();
 
 
 

@@ -122,6 +122,42 @@ namespace Anthony
             return State;
         }
     }
+    public class SequenceAttaque : Node
+    {
+        int quiAttaque;
+        Node root;
+        public SequenceAttaque(List<Node> n) : base(n) { }
+        public override NodeState Evaluate()
+        {
+            State = children[0].Evaluate();
+            // legende de la liste
+            //0=cinématique
+            //1 = distance pas sur boss
+            //2 = cac pas sur boss
+            //3= millieu boss
+            //4 =surdos boss
+            
+            if(State != NodeState.Success)
+            {
+                bool peutAttaquer = (Boolean)root.GetData("peutAttaquer");
+
+                if (peutAttaquer)
+                {
+                    quiAttaque = (int)root.GetData("quiAttaquer");
+
+                    State = children[quiAttaque + 1].Evaluate();
+
+
+                }
+            }
+           
+            return State;
+        }
+        public void MettreRoot()
+        {
+            root = GetRoot();
+        }
+    }
     public class cinématique : Node
     {
        public bool cinematique = false;
@@ -187,7 +223,7 @@ namespace Anthony
             {
                 State = NodeState.Success;
             }
-           
+            
             return State;
         }
 
@@ -195,16 +231,94 @@ namespace Anthony
 
     public class WaitTime : Node
     {
+        // legende de la liste
+        //0 = distance pas sur boss
+        //1 = cac pas sur boss
+        //2= millieu boss
+        //3 =surdos boss
+        List<float> ListeTemps;
+        List<float> ListeTempDattente;
+        int etatPasser =-1;
+        int etatEnCour =-1;
 
-        public WaitTime() : base()
+        Node root;
+        public WaitTime(float attente) : base()
         {
+            ListeTemps = new List<float> { 0,0,0,0};
+            // la s'est la meme chose pour les 4 mais potentielement modifiable pour
+            //des temps différents
+            ListeTempDattente= new List<float> { attente, attente, attente, attente };
 
         }
 
         public override NodeState Evaluate()
         {
+           State = NodeState.Running;
+            bool distance =(Boolean)root.GetData("distance");
+           bool surboss = (Boolean)root.GetData("surboss");
+            bool millieu = (Boolean)root.GetData("millieu");
+            bool peutAttaquer = (Boolean)root.GetData("peutAttaquer");
+            if (!peutAttaquer)
+            {
+                if (surboss)
+                {
+
+
+                    if (distance)
+                    {
+                        etatEnCour = 0;
+                        root.SetData("quiAttaquer", etatEnCour);
+                    }
+                    else
+                    {
+                        etatEnCour = 1;
+                        root.SetData("quiAttaquer", etatEnCour);
+                    }
+
+                }
+                else
+                {
+
+                    if (millieu)
+                    {
+                        etatEnCour = 2;
+                        root.SetData("quiAttaquer", etatEnCour);
+                    }
+                    else
+                    {
+                        etatEnCour = 3;
+                        root.SetData("quiAttaquer", etatEnCour);
+                    }
+                }
+                if (etatEnCour != etatPasser)
+                {
+                    etatPasser = etatEnCour;
+                    ListeTemps = new List<float> { 0, 0, 0, 0 };
+                }
+                else
+                {
+                    ListeTemps[etatEnCour] += Time.deltaTime;
+                    if (ListeTemps[etatEnCour] > ListeTempDattente[etatEnCour])
+                    {
+                        ListeTemps[etatEnCour] = 0;
+                        peutAttaquer = true;
+                    }
+                }
+            }
+           
+
+
 
             return State;
+        }
+        public void MettreRoot()
+        {
+            root = GetRoot();
+            root.SetData("distance", false);
+            root.SetData("surboss", false);
+            root.SetData("millieu", false);
+            root.SetData("peutAttaquer", false);
+            root.SetData("quiAttaquer", -1);
         }
 
     }
@@ -240,22 +354,22 @@ namespace Anthony
 
     }
 
-    //cac = corp a corp
-    public class CAC : Node
-    {
+    ////cac = corp a corp
+    //public class CAC : Node
+    //{
 
-        public CAC() : base()
-        {
+    //    public CAC() : base()
+    //    {
 
-        }
+    //    }
 
-        public override NodeState Evaluate()
-        {
+    //    public override NodeState Evaluate()
+    //    {
 
-            return State;
-        }
+    //        return State;
+    //    }
 
-    }
+    //}
 
     public class ShockWave : Node
     {

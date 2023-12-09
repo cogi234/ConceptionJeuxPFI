@@ -6,6 +6,7 @@ using UnityEngine.ProBuilder.Shapes;
 using Random = System.Random;
 using Mathf = System.Math;
 using Unity.VisualScripting;
+using Anthony;
 
 public class Entrerp2 : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class Entrerp2 : MonoBehaviour
     BlocDownfall2[] BlocDownfallListsTab2 = new BlocDownfall2[0];
     Animator animator;
     AudioSource audioSource;
+    cinématique cinematique;
     int ListeRequis;
     // Start is called before the first frame update
     void Start()
@@ -28,6 +30,7 @@ public class Entrerp2 : MonoBehaviour
         audioSource = Boss.GetComponent<AudioSource>();
         BlocDownfallListsTab = Boss.GetComponentsInChildren<BlocDownfall>();
         BlocDownfallListsTab2 = Boss.GetComponentsInChildren<BlocDownfall2>();
+        cinematique = Boss.GetComponent<Bossp2Composant>().Cinema;
         for (int i = 0; i < BlocDownfallListsTab.Length; i++)
         {
             BlocDownfallList.Add(BlocDownfallListsTab[i]);  
@@ -37,7 +40,7 @@ public class Entrerp2 : MonoBehaviour
             BlocDownfallList2.Add(BlocDownfallListsTab2[j]);
         }
 
-
+        cinematique.cinematique = true;
     }
 
     bool Tp = true;
@@ -61,16 +64,19 @@ public class Entrerp2 : MonoBehaviour
     [SerializeField] float compteurAvantCri=0.5f;
     float compteurCri;
     bool triggerAnimation = true;
+   
+    
     private void Update()
     {
 
+       
         if (!finDeEntrer)
         {
             
         
 
-        if (Tp)
-        {
+         if (Tp)
+         {
 
             foreach (BlocDownfall t in BlocDownfallList)
             {
@@ -81,9 +87,9 @@ public class Entrerp2 : MonoBehaviour
                 t.tp();
             }
             Tp = false;
-        }
-        if (BlocDownfallList.Count != 0)
-        {
+         }
+          if (BlocDownfallList.Count != 0)
+         {
 
 
             if (ConteurBPM >= BPM)
@@ -128,9 +134,9 @@ public class Entrerp2 : MonoBehaviour
 
                 ConteurBPM += Time.deltaTime;
             }
-        }
-        else if (BlocDownfallList2.Count != 0)
-        {
+              }
+         else if (BlocDownfallList2.Count != 0)
+          {
             if (reset)
             {
                 reset = !reset;
@@ -184,9 +190,9 @@ public class Entrerp2 : MonoBehaviour
 
 
 
-        }
-        if(BlocDownfallList2.Count == 0 && BlocDownfallList.Count == 0)
-        {
+         }
+         if(BlocDownfallList2.Count == 0 && BlocDownfallList.Count == 0)
+         {
                 if (triggerAnimation)
                 {
                     animator.SetTrigger("DebutCri");
@@ -202,8 +208,13 @@ public class Entrerp2 : MonoBehaviour
             }
                
 
-        }
+          }
 
+        }
+        //apres la fin d'entrer
+        else
+        {
+            cinematique.cinematique = false;
         }
     }
 }

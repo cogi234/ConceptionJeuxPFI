@@ -9,28 +9,34 @@ public class Bossp2Composant : MonoBehaviour
 {
     public SurBoss SurBoss;
     public Distance distance;
+    public cinématique Cinema;
     Node root;
     GameObject joueur;
     [SerializeField] float DistanceCac = 150;
     [SerializeField] float attente = 10;
+    [SerializeField] int nombreDeMissile = 10;
+    [SerializeField] int TempsentreMissileDistance = 10;
+    [SerializeField] GameObject Missile;
     GameObject Boss;
+    GameObject ZoneTire;
 
     private void Awake()
     {
         Boss = GameObject.FindGameObjectWithTag("BossP2");
         joueur = GameObject.FindGameObjectWithTag("Player");
+        ZoneTire = GameObject.FindGameObjectWithTag("tireZone");
         SetupTree();
     }
 
    
     private void SetupTree()
     {
-        
-       Node Cinema = new cinématique();
+
+         Cinema = new cinématique();
 
         //Tout les node sol
         //tirenode
-        Node misile = new Missile(); 
+        Node misile = new Missile(nombreDeMissile, ZoneTire, TempsentreMissileDistance, Missile,joueur.transform); 
         Node BouleFeu = new BoulleDeFeu();
        Node Seq1Tire = new Sequence(new List<Node> { misile, BouleFeu });
         //distanceNode
@@ -80,12 +86,14 @@ public class Bossp2Composant : MonoBehaviour
         Node Seq9SurBoss = new Sequence(new List<Node> { SurBoss, SurBossSelector});
 
         //phase d'attaque
-        Node SequenceAttaque = new SequenceAttaque(new List<Node> { Cinema, Seq1Tire,shokWave,Seq7MillieuTrap, Seq5SurDosTrap });
+        SequenceAttaque SequenceAttaque = new SequenceAttaque(new List<Node> { Cinema, Seq1Tire,shokWave,Seq7MillieuTrap, Seq5SurDosTrap });
 
         //Root
         Node RootSelector  =  new Selector(new List<Node>() { SequenceAttaque, Seq4Sol, Seq9SurBoss });
         root = RootSelector;
         Wait.MettreRoot();
+        SequenceAttaque.MettreRoot();
+
 
 
 
@@ -97,7 +105,7 @@ public class Bossp2Composant : MonoBehaviour
 
     void Update()
     {
-       // root.Evaluate();
+        root.Evaluate();
     }
    
 }

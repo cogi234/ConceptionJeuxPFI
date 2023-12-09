@@ -137,12 +137,15 @@ namespace Anthony
             //3= millieu boss
             //4 =surdos boss
             
-            if(State != NodeState.Success)
+            if(State != NodeState.Running)
             {
                 bool peutAttaquer = (Boolean)root.GetData("peutAttaquer");
-
+                Debug.Log("estdans attaque");
+               
                 if (peutAttaquer)
+
                 {
+                    Debug.Log(quiAttaque + 1);
                     quiAttaque = (int)root.GetData("quiAttaquer");
 
                     State = children[quiAttaque + 1].Evaluate();
@@ -169,10 +172,11 @@ namespace Anthony
 
         public override NodeState Evaluate()
         {
+            Debug.Log("cinemat");
             State = NodeState.Failure;
             if (cinematique)
             {
-                State = NodeState.Success;
+                State = NodeState.Running;
             }
 
             return State;
@@ -190,6 +194,7 @@ namespace Anthony
 
         public override NodeState Evaluate()
         {
+            Debug.Log("surboss");
             State = NodeState.Failure;
             if (JoueurSurBoss)
             {
@@ -218,6 +223,7 @@ namespace Anthony
 
         public override NodeState Evaluate()
         {
+            Debug.Log("distance");
             State = NodeState.Failure;
             if (Vector3.Distance(boss.position, joeur.position) >= DistanceCac)
             {
@@ -253,17 +259,18 @@ namespace Anthony
 
         public override NodeState Evaluate()
         {
-           State = NodeState.Running;
+            Debug.Log("WaitTime");
+            State = NodeState.Running;
             bool distance =(Boolean)root.GetData("distance");
            bool surboss = (Boolean)root.GetData("surboss");
             bool millieu = (Boolean)root.GetData("millieu");
             bool peutAttaquer = (Boolean)root.GetData("peutAttaquer");
             if (!peutAttaquer)
             {
-                if (surboss)
+                if (!surboss)
                 {
 
-
+                   
                     if (distance)
                     {
                         etatEnCour = 0;
@@ -297,11 +304,12 @@ namespace Anthony
                 }
                 else
                 {
+                   
                     ListeTemps[etatEnCour] += Time.deltaTime;
                     if (ListeTemps[etatEnCour] > ListeTempDattente[etatEnCour])
                     {
                         ListeTemps[etatEnCour] = 0;
-                        peutAttaquer = true;
+                        root.SetData("peutAttaquer", true);
                     }
                 }
             }
@@ -325,16 +333,61 @@ namespace Anthony
 
     public class Missile : Node
     {
-
-        public Missile() : base()
+        int nombreMissile;
+        Transform[] zonneDeTire;
+        int TempsentreMissile;
+        float compteurTemps = 0;
+        int CompteurNBmissileTirer =0 ;
+        int CompteurPositionTire = 0;
+        GameObject missile;
+        Node root;
+        Transform joueur;
+        public Missile(int nombreMissile, GameObject zoneTire, int TempsentreMissile,
+            GameObject Missile, Transform joueur) : base()
         {
-
+            this.nombreMissile = nombreMissile;
+            zonneDeTire = zoneTire.GetComponentsInChildren<Transform>();
+            this.TempsentreMissile = TempsentreMissile;
+            missile=Missile;
+            this.joueur= joueur;
         }
 
         public override NodeState Evaluate()
         {
+            Debug.Log("estdans Missile");
+            State = NodeState.Failure;
+            if (CompteurNBmissileTirer != nombreMissile)
+            {
+
+
+                if (compteurTemps > TempsentreMissile)
+                {
+                    GameObject LeMissile = ObjectPool.objectPool.GetObject(missile);
+                    missile scripMissile = LeMissile.GetComponent<missile>();
+                    scripMissile.donneCoordoner(zonneDeTire[CompteurPositionTire], joueur);
+                    LeMissile.SetActive(true);
+
+                    CompteurPositionTire++;
+                    if (CompteurPositionTire> zonneDeTire.Length)
+                    {
+                        CompteurPositionTire = 0;
+                    }
+                    compteurTemps = 0;
+                    CompteurNBmissileTirer++;
+                }
+                else
+                {
+                    compteurTemps += Time.deltaTime;
+                }
+                State = NodeState.Running;
+            }
+            
 
             return State;
+        }
+        public void MettreRoot()
+        {
+            root = GetRoot();
         }
 
     }
@@ -464,7 +517,7 @@ namespace Anthony
 
         public override NodeState Evaluate()
         {
-
+            Debug.Log("dansBlockTrap");
             return State;
         }
 

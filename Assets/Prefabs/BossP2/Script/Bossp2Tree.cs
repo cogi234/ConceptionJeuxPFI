@@ -7,9 +7,10 @@ using UnityEngine;
 namespace Anthony
 {
     public enum NodeState { Running, Success, Failure }
-
+   
     public abstract class Node
     {
+       protected Node root;
         Dictionary<String, object> data = new Dictionary<String, object>();
         public void SetData(string key, object value)
         {
@@ -63,6 +64,10 @@ namespace Anthony
             if (parent != null)
                 return parent.RemoveData(key);
             return false;
+        }
+        public void MettreRoot()
+        {
+            root = GetRoot();
         }
     }
 
@@ -126,7 +131,7 @@ namespace Anthony
     public class SequenceAttaque : Node
     {
         int quiAttaque;
-        Node root;
+     
         public SequenceAttaque(List<Node> n) : base(n) { }
         public override NodeState Evaluate()
         {
@@ -157,10 +162,7 @@ namespace Anthony
            
             return State;
         }
-        public void MettreRoot()
-        {
-            root = GetRoot();
-        }
+       
     }
     public class cinématique : Node
     {
@@ -187,7 +189,7 @@ namespace Anthony
     public class SurBoss : Node
     {
         public bool JoueurSurBoss = false;
-
+ 
         public SurBoss() : base()
         {
 
@@ -199,11 +201,17 @@ namespace Anthony
             State = NodeState.Failure;
             if (JoueurSurBoss)
             {
+                root.SetData("surboss", true);
                 State = NodeState.Success;
+            }
+            else
+            {
+                root.SetData("surboss", false);
             }
 
             return State;
         }
+     
 
     }
 
@@ -214,7 +222,7 @@ namespace Anthony
         Transform joeur;
         Transform boss;
         float DistanceCac;
-        Node root;
+        
         public Distance(Transform joeur, Transform boss, float DistanceCac) : base()
         {
             this.joeur = joeur;
@@ -225,7 +233,7 @@ namespace Anthony
 
         public override NodeState Evaluate()
         {
-            Debug.Log("distance");
+          
             State = NodeState.Failure;
             if (Vector3.Distance(boss.position, joeur.position) >= DistanceCac)
             {
@@ -235,11 +243,7 @@ namespace Anthony
             
             return State;
         }
-        public void MettreRoot()
-        {
-            root = GetRoot();
-          
-        }
+       
 
     }
 
@@ -255,7 +259,7 @@ namespace Anthony
         int etatPasser =-1;
         int etatEnCour =-1;
 
-        Node root;
+      
         public WaitTime(float attente) : base()
         {
             ListeTemps = new List<float> { 0,0,0,0};
@@ -273,6 +277,8 @@ namespace Anthony
            bool surboss = (Boolean)root.GetData("surboss");
             bool millieu = (Boolean)root.GetData("millieu");
             bool peutAttaquer = (Boolean)root.GetData("peutAttaquer");
+            Debug.Log(surboss); 
+                 Debug.Log(millieu);
             if (!peutAttaquer)
             {
                 if (!surboss)
@@ -329,7 +335,7 @@ namespace Anthony
 
             return State;
         }
-        public void MettreRoot()
+        public void MettreRoots()
         {
             root = GetRoot();
             root.SetData("distance", false);
@@ -351,7 +357,7 @@ namespace Anthony
         int CompteurNBmissileTirer =0 ;
         int CompteurPositionTire = 0;
         GameObject missile;
-        Node root;
+       
         Transform joueur;
         public Missile(int nombreMissile, GameObject zoneTire, int TempsentreMissile,
             GameObject Missile, Transform joueur) : base()
@@ -403,10 +409,7 @@ namespace Anthony
 
             return State;
         }
-        public void MettreRoot()
-        {
-            root = GetRoot();
-        }
+        
 
     }
     public class BoulleDeFeu : Node
@@ -445,7 +448,7 @@ namespace Anthony
 
     public class ShockWave : Node
     {
-        Node root;
+       
         float tempsEntreChoc;
         float compteurTempsEntreChoc;
         int nombreDeChoc;
@@ -500,10 +503,7 @@ namespace Anthony
 
             return State;
         }
-        public void MettreRoot()
-        {
-            root = GetRoot();
-        }
+       
 
     }
 
@@ -512,7 +512,8 @@ namespace Anthony
 
     public class Millieu : Node
     {
-
+        public bool DansMillieu;
+       
         public Millieu() : base()
         {
 
@@ -521,8 +522,22 @@ namespace Anthony
         public override NodeState Evaluate()
         {
 
+            State = NodeState.Failure;
+            if (DansMillieu)
+            {
+                root.SetData("millieu", true);
+                State = NodeState.Success;
+            }
+            else
+            {
+                root.SetData("millieu", false);
+            }
+
+
+
             return State;
         }
+       
 
     }
 
@@ -530,18 +545,67 @@ namespace Anthony
     public class FallBlock : Node
     {
 
-        public FallBlock() : base()
+        float tempsEntrebloc;
+        float compteurTempsEntrebloc;
+        int nombreDebloc;
+        int CompteurNombrebloc=0;
+        GameObject Blockfall;
+        Transform[] départ;
+        int CompteurPosition =0;
+        public FallBlock(Transform[] Position,GameObject bloc, float tempsEntrebloc,int nombreblock) : base()
         {
-
+            départ = Position;
+            Blockfall = bloc;
+            this.tempsEntrebloc = tempsEntrebloc;
+            this.nombreDebloc = nombreblock;
         }
-
         public override NodeState Evaluate()
         {
 
+
+            if (CompteurNombrebloc != nombreDebloc)
+            {
+
+
+                if (compteurTempsEntrebloc >= tempsEntrebloc)
+                {
+
+                    GameObject LeChoc = ObjectPool.objectPool.GetObject(Blockfall);
+
+                    Debug.Log(départ.Length);
+                    LeChoc.transform.position = départ[CompteurPosition%départ.Length].position;
+                    LeChoc.SetActive(true);
+                    CompteurPosition++;
+                    CompteurNombrebloc++;
+                    compteurTempsEntrebloc = 0;
+                }
+                else
+                {
+                    compteurTempsEntrebloc += Time.deltaTime;
+
+                }
+
+            }
+            else
+            {
+                CompteurNombrebloc = 0;
+                CompteurPosition = 0;
+                root.SetData("peutAttaquer", false);
+            }
+
+            State = NodeState.Running;
+
+
+
+
+
             return State;
+
         }
 
     }
+
+    
     public class Spike : Node
     {
 

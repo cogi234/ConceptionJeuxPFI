@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DetectionSurBossMillieu : MonoBehaviour
+public class DanLeMilieu : MonoBehaviour
 {
-
-  
     Bossp2Composant NodeBoss;
     private void Start()
     {
@@ -14,16 +12,13 @@ public class DetectionSurBossMillieu : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("DANS TRIGGER SUR BOSS");
-
-        NodeBoss.DansMilieu.DansMillieu = true;
+       
+        NodeBoss.SurBoss.JoueurSurBoss = true;
 
     }
 
     private void OnTriggerExit(Collider other)
     {
-        NodeBoss.DansMilieu.DansMillieu = false;
+        NodeBoss.SurBoss.JoueurSurBoss = false;
     }
-
-
 }

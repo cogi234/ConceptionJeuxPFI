@@ -10,19 +10,25 @@ public class Bossp2Composant : MonoBehaviour
     public SurBoss SurBoss;
     public Distance distance;
     public cinématique Cinema;
+    public Millieu DansMilieu;
     Node root;
     GameObject joueur;
     [SerializeField] float DistanceCac = 150;
     [SerializeField] float attente = 10;
     [SerializeField] int nombreDeMissile = 5;
-    [SerializeField] int TempsentreMissileDistance = 5;
+    [SerializeField] int TempsentreMissileDistance = 2;
     [SerializeField] int nombreDeChoc= 5;
-    [SerializeField] int TempsentreChoc = 5;
+    [SerializeField] int TempsentreChoc = 2;
+    [SerializeField] int nombreDeBlocMillieu= 5;
+    [SerializeField] int TempsentreBlocMillieu = 2;
     [SerializeField] GameObject Missile;
     [SerializeField] GameObject Choc;
+    [SerializeField] GameObject MillieuBloc;
+    Transform[] millieuPostionBlocDrop;
     GameObject Boss;
     GameObject ZoneTire;
     GameObject ZoneChoc;
+    GameObject ZoneMillieu;
 
     private void Awake()
     {
@@ -30,6 +36,9 @@ public class Bossp2Composant : MonoBehaviour
         joueur = GameObject.FindGameObjectWithTag("Player");
         ZoneTire = GameObject.FindGameObjectWithTag("tireZone");
         ZoneChoc = GameObject.FindGameObjectWithTag("tireChoc");
+        ZoneMillieu = GameObject.FindGameObjectWithTag("tireMillieu");
+        millieuPostionBlocDrop = ZoneMillieu.GetComponentsInChildren<Transform>();
+        Debug.Log(millieuPostionBlocDrop.Length);
         SetupTree();
     }
 
@@ -69,20 +78,21 @@ public class Bossp2Composant : MonoBehaviour
         Node Seq5SurDosTrap = new Sequence(new List<Node> { blockTrap, smalMisile });
 
         //surDosSequence
-        Node  SurDos = new SurDos();
-        Node Seq6SurDos = new Sequence(new List<Node> { SurDos, Wait });
+        DansMilieu = new Millieu();
+        Node inverterMilieu = new Inverter(new List<Node> { DansMilieu });
+        Node Seq6SurDos = new Sequence(new List<Node> { inverterMilieu, Wait });
 
 
         //trapMillieuSequence
-        Node FallBlock = new FallBlock();
+        Node FallBlock = new FallBlock(millieuPostionBlocDrop, MillieuBloc,TempsentreBlocMillieu,nombreDeBlocMillieu);
         Node spike = new Spike();
         Node Seq7MillieuTrap = new Sequence(new List<Node> { FallBlock, spike });
 
 
         //TrapMillieuSequence
-        //Node Millieu = new Millieu();
-        Node inverterMilieu = new Inverter(new List<Node> { SurDos });
-        Node Seq8Millieu= new Sequence(new List<Node> { inverterMilieu, Wait });
+      
+       
+        Node Seq8Millieu= new Sequence(new List<Node> { DansMilieu, Wait });
 
         //SelectorSurBoss
         Node SurBossSelector = new Selector(new List<Node>() { Seq8Millieu, Seq6SurDos });
@@ -96,12 +106,14 @@ public class Bossp2Composant : MonoBehaviour
         //Root
         Node RootSelector  =  new Selector(new List<Node>() { SequenceAttaque, Seq4Sol, Seq9SurBoss });
         root = RootSelector;
-        Wait.MettreRoot();
+        Wait.MettreRoots();
         SequenceAttaque.MettreRoot();
         distance.MettreRoot();
         shokWave.MettreRoot();
         misile.MettreRoot();
-
+        DansMilieu.MettreRoot();
+        SurBoss.MettreRoot();
+        FallBlock.MettreRoot();
 
 
 

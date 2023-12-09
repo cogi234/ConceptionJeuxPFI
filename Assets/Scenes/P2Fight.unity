@@ -236,7 +236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6288260544259227352, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 490.9
+      value: 247.9
       objectReference: {fileID: 0}
     - target: {fileID: 6288260544259227352, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -879,6 +879,26 @@ PrefabInstance:
     - target: {fileID: 3976469208386984611, guid: 88744fd32ed9d8740a99c1be5938f18a, type: 3}
       propertyPath: attente
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3976469208386984611, guid: 88744fd32ed9d8740a99c1be5938f18a, type: 3}
+      propertyPath: DistanceCac
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 3976469208386984611, guid: 88744fd32ed9d8740a99c1be5938f18a, type: 3}
+      propertyPath: nombreDeChoc
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3976469208386984611, guid: 88744fd32ed9d8740a99c1be5938f18a, type: 3}
+      propertyPath: TempsentreChoc
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3976469208386984611, guid: 88744fd32ed9d8740a99c1be5938f18a, type: 3}
+      propertyPath: nombreDeMissile
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3976469208386984611, guid: 88744fd32ed9d8740a99c1be5938f18a, type: 3}
+      propertyPath: TempsentreMissileDistance
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6400984831212755526, guid: 88744fd32ed9d8740a99c1be5938f18a, type: 3}
       propertyPath: m_Name
@@ -1915,7 +1935,7 @@ Transform:
   m_GameObject: {fileID: 1908793907}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -41.0321, y: 1.7682154, z: 276.0259}
+  m_LocalPosition: {x: -41.0321, y: 1.7682154, z: 308.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

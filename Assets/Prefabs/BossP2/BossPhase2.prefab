@@ -249,6 +249,37 @@ Transform:
   - {fileID: 351025951514592978}
   m_Father: {fileID: 6217128080635098348}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2332083548515239895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4249767045208601056}
+  m_Layer: 0
+  m_Name: ZoneOndeDeShoc
+  m_TagString: tireChoc
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4249767045208601056
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2332083548515239895}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -25.64, y: 0, z: 1.46}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9051450496583257575}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2495971201356097843
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,37 +858,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HauteurChute: 40
---- !u!1 &4834454167367871661
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2295360601518635997}
-  m_Layer: 0
-  m_Name: zonePrincipale
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2295360601518635997
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4834454167367871661}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 174734739555857960}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5448520027841149526
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,6 +999,7 @@ Transform:
   - {fileID: 6104609782228557148}
   - {fileID: 174734739555857960}
   - {fileID: 7207030028019263671}
+  - {fileID: 4249767045208601056}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3976469208386984611
@@ -1017,7 +1018,10 @@ MonoBehaviour:
   attente: 10
   nombreDeMissile: 10
   TempsentreMissileDistance: 10
+  nombreDeChoc: 5
+  TempsentreChoc: 5
   Missile: {fileID: 2598272338648702529, guid: 5e2b5682a53e38045b81a54e8bd85aa5, type: 3}
+  Choc: {fileID: 2070865296287691350, guid: 1def510f1b5386e458807e241d5f1c52, type: 3}
 --- !u!114 &6932905072119888748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1483,7 +1487,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2295360601518635997}
   - {fileID: 1847867552639963784}
   - {fileID: 5125514274133762362}
   - {fileID: 9207891273963721388}

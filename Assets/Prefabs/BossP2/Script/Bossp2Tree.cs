@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Anthony
@@ -140,7 +141,7 @@ namespace Anthony
             if(State != NodeState.Running)
             {
                 bool peutAttaquer = (Boolean)root.GetData("peutAttaquer");
-                Debug.Log("estdans attaque");
+                //Debug.Log("estdans attaque");
                
                 if (peutAttaquer)
 
@@ -172,7 +173,7 @@ namespace Anthony
 
         public override NodeState Evaluate()
         {
-            Debug.Log("cinemat");
+          //  Debug.Log("cinemat");
             State = NodeState.Failure;
             if (cinematique)
             {
@@ -194,7 +195,7 @@ namespace Anthony
 
         public override NodeState Evaluate()
         {
-            Debug.Log("surboss");
+         //   Debug.Log("surboss");
             State = NodeState.Failure;
             if (JoueurSurBoss)
             {
@@ -213,6 +214,7 @@ namespace Anthony
         Transform joeur;
         Transform boss;
         float DistanceCac;
+        Node root;
         public Distance(Transform joeur, Transform boss, float DistanceCac) : base()
         {
             this.joeur = joeur;
@@ -227,10 +229,16 @@ namespace Anthony
             State = NodeState.Failure;
             if (Vector3.Distance(boss.position, joeur.position) >= DistanceCac)
             {
+                root.SetData("distance", true);
                 State = NodeState.Success;
             }
             
             return State;
+        }
+        public void MettreRoot()
+        {
+            root = GetRoot();
+          
         }
 
     }
@@ -259,7 +267,7 @@ namespace Anthony
 
         public override NodeState Evaluate()
         {
-            Debug.Log("WaitTime");
+           Debug.Log("WaitTime");
             State = NodeState.Running;
             bool distance =(Boolean)root.GetData("distance");
            bool surboss = (Boolean)root.GetData("surboss");
@@ -278,6 +286,7 @@ namespace Anthony
                     }
                     else
                     {
+                     
                         etatEnCour = 1;
                         root.SetData("quiAttaquer", etatEnCour);
                     }
@@ -304,10 +313,11 @@ namespace Anthony
                 }
                 else
                 {
-                   
+           
                     ListeTemps[etatEnCour] += Time.deltaTime;
                     if (ListeTemps[etatEnCour] > ListeTempDattente[etatEnCour])
                     {
+                       
                         ListeTemps[etatEnCour] = 0;
                         root.SetData("peutAttaquer", true);
                     }
@@ -333,6 +343,7 @@ namespace Anthony
 
     public class Missile : Node
     {
+        Transform pointDépart;
         int nombreMissile;
         Transform[] zonneDeTire;
         int TempsentreMissile;
@@ -348,13 +359,15 @@ namespace Anthony
             this.nombreMissile = nombreMissile;
             zonneDeTire = zoneTire.GetComponentsInChildren<Transform>();
             this.TempsentreMissile = TempsentreMissile;
-            missile=Missile;
-            this.joueur= joueur;
+            missile = Missile;
+            this.joueur = joueur;
+            this.pointDépart = zoneTire.transform;
         }
 
         public override NodeState Evaluate()
         {
-            Debug.Log("estdans Missile");
+            State = NodeState.Running;
+            //Debug.Log("estdans Missile");
             State = NodeState.Failure;
             if (CompteurNBmissileTirer != nombreMissile)
             {
@@ -365,10 +378,11 @@ namespace Anthony
                     GameObject LeMissile = ObjectPool.objectPool.GetObject(missile);
                     missile scripMissile = LeMissile.GetComponent<missile>();
                     scripMissile.donneCoordoner(zonneDeTire[CompteurPositionTire], joueur);
+                    LeMissile.transform.position = pointDépart.position;
                     LeMissile.SetActive(true);
 
                     CompteurPositionTire++;
-                    if (CompteurPositionTire> zonneDeTire.Length)
+                    if (CompteurPositionTire == zonneDeTire.Length)
                     {
                         CompteurPositionTire = 0;
                     }
@@ -379,7 +393,11 @@ namespace Anthony
                 {
                     compteurTemps += Time.deltaTime;
                 }
-                State = NodeState.Running;
+             
+            }
+            else {
+                CompteurNBmissileTirer = 0;
+                root.SetData("peutAttaquer", false);
             }
             
 
@@ -402,6 +420,7 @@ namespace Anthony
         public override NodeState Evaluate()
         {
 
+            //potentielement a faire
             return State;
         }
 
@@ -426,16 +445,64 @@ namespace Anthony
 
     public class ShockWave : Node
     {
+        Node root;
+        float tempsEntreChoc;
+        float compteurTempsEntreChoc;
+        int nombreDeChoc;
+        int CompteurNombreChoc;
+        GameObject OndeDeChoc;
+        Transform départ;
 
-        public ShockWave() : base()
+        public ShockWave(float tempsEntreChoc, GameObject ondeDeChoc,int nombreDeChoc,Transform Source) : base()
         {
-
+            this.tempsEntreChoc = tempsEntreChoc;
+            OndeDeChoc = ondeDeChoc;
+            this.nombreDeChoc = nombreDeChoc;
+            départ = Source;
         }
 
         public override NodeState Evaluate()
         {
 
+            if (CompteurNombreChoc != nombreDeChoc)
+            {
+
+
+                if (compteurTempsEntreChoc >= tempsEntreChoc)
+                {
+
+                    GameObject LeChoc = ObjectPool.objectPool.GetObject(OndeDeChoc);
+                    OndeChoc scripChoc = LeChoc.GetComponent<OndeChoc>();
+                    //scripChoc.Grosseur(2);
+                    LeChoc.transform.position = départ.position;
+                    LeChoc.SetActive(true);
+                    CompteurNombreChoc++;
+                    compteurTempsEntreChoc = 0;
+                }
+                else
+                {
+                    compteurTempsEntreChoc += Time.deltaTime;
+                  
+                }
+
+            }
+            else
+            {
+                CompteurNombreChoc = 0;
+                root.SetData("peutAttaquer", false);
+            }
+
+            State = NodeState.Running;
+           
+
+
+
+
             return State;
+        }
+        public void MettreRoot()
+        {
+            root = GetRoot();
         }
 
     }

@@ -14,17 +14,22 @@ public class Bossp2Composant : MonoBehaviour
     GameObject joueur;
     [SerializeField] float DistanceCac = 150;
     [SerializeField] float attente = 10;
-    [SerializeField] int nombreDeMissile = 10;
-    [SerializeField] int TempsentreMissileDistance = 10;
+    [SerializeField] int nombreDeMissile = 5;
+    [SerializeField] int TempsentreMissileDistance = 5;
+    [SerializeField] int nombreDeChoc= 5;
+    [SerializeField] int TempsentreChoc = 5;
     [SerializeField] GameObject Missile;
+    [SerializeField] GameObject Choc;
     GameObject Boss;
     GameObject ZoneTire;
+    GameObject ZoneChoc;
 
     private void Awake()
     {
         Boss = GameObject.FindGameObjectWithTag("BossP2");
         joueur = GameObject.FindGameObjectWithTag("Player");
         ZoneTire = GameObject.FindGameObjectWithTag("tireZone");
+        ZoneChoc = GameObject.FindGameObjectWithTag("tireChoc");
         SetupTree();
     }
 
@@ -36,7 +41,7 @@ public class Bossp2Composant : MonoBehaviour
 
         //Tout les node sol
         //tirenode
-        Node misile = new Missile(nombreDeMissile, ZoneTire, TempsentreMissileDistance, Missile,joueur.transform); 
+        Missile misile = new Missile(nombreDeMissile, ZoneTire, TempsentreMissileDistance, Missile,joueur.transform); 
         Node BouleFeu = new BoulleDeFeu();
        Node Seq1Tire = new Sequence(new List<Node> { misile, BouleFeu });
         //distanceNode
@@ -46,7 +51,7 @@ public class Bossp2Composant : MonoBehaviour
         //CacSolNode
        // Node Cac = new CAC();
         Node inverterDistance = new Inverter(new List<Node> { distance});
-        Node shokWave = new ShockWave();
+        ShockWave shokWave = new ShockWave(TempsentreChoc, Choc, nombreDeChoc, ZoneChoc.transform);
         Node Seq3CacSol = new Sequence(new List<Node> { inverterDistance, Wait });
         //selector sol
         Node sel1Sol = new Selector(new List<Node>() { Seq2SolDistance, Seq3CacSol });
@@ -93,7 +98,9 @@ public class Bossp2Composant : MonoBehaviour
         root = RootSelector;
         Wait.MettreRoot();
         SequenceAttaque.MettreRoot();
-
+        distance.MettreRoot();
+        shokWave.MettreRoot();
+        misile.MettreRoot();
 
 
 

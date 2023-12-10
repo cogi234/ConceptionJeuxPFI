@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1265821090119527101}
   - component: {fileID: 2079126513990747922}
   - component: {fileID: 7261795671921117911}
+  - component: {fileID: 2578999910478715564}
   m_Layer: 0
   m_Name: Core
   m_TagString: core
@@ -41,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7061017066987767121}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 0}
 --- !u!23 &2079126513990747922
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2e5041d21b9f9994e9df7e31e776e171, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -105,3 +106,20 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2578999910478715564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7061017066987767121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c4fb51306e22364cab3e11343ba2ac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numVertices: {x: 20, y: 20}
+  amplitude: 0.2
+  timeFrequency: {x: 2, y: 2.5, z: 3}
+  frequency: {x: 5, y: 5, z: 5}
+  offset: {x: 0, y: 100, z: 200}

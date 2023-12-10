@@ -38,7 +38,7 @@ public class Bossp2Composant : MonoBehaviour
         ZoneChoc = GameObject.FindGameObjectWithTag("tireChoc");
         ZoneMillieu = GameObject.FindGameObjectWithTag("tireMillieu");
         millieuPostionBlocDrop = ZoneMillieu.GetComponentsInChildren<Transform>();
-        Debug.Log(millieuPostionBlocDrop.Length);
+      
         SetupTree();
     }
 

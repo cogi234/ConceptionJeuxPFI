@@ -5,38 +5,53 @@ using UnityEngine.AI;
 
 public class SpawnerEnnemi : MonoBehaviour
 {
-    [SerializeField] GameObject ennemy;
+    [SerializeField] List<GameObject> ennemy;
     [SerializeField] GameObject[] spawns;
     [SerializeField] GameObject Player;
-    float delay = 5;
+    [SerializeField] float delay = 5;
+    int compteurEnnemie=0;
   
     NavMeshAgent navMeshAgent;
-    float lastSpeed = 0.2f;
+  
 
    
     void Update()
     {
-        SpawnEnnemy();
+        if (delay <= 0)
+        {
+            SpawnEnnemy();
+            
+        }
         delay -= Time.deltaTime;
 
     }
     void SpawnEnnemy()
     {
-        if (delay <= 0)
-        {
-            GameObject tempEnnemy = ObjectPool.objectPool.GetObject(ennemy);
+       
+            GameObject ennemie = ObjectPool.objectPool.GetObject(ennemy[compteurEnnemie]);
             
-            if (tempEnnemy != null)
+            if (ennemie != null)
             {
 
-                NavMeshAgent nav = tempEnnemy.GetComponent<NavMeshAgent>();
-                tempEnnemy.transform.position = spawns[Random.Range(0, spawns.Length)].transform.position;
-               
-                nav.enabled = true;
-                tempEnnemy.SetActive(true);
-            }
-            lastSpeed += 0.1f;
+                NavMeshAgent nav = ennemie.GetComponent<NavMeshAgent>();
+            //NavMeshTriangulation triangulation = NavMesh.CalculateTriangulation();
+            //int vertexindext = Random.Range(0, triangulation.vertices.Length);
+            //NavMeshHit hit;
+            //if (NavMesh.SamplePosition(triangulation.vertices[vertexindext], out hit, 2f, 0)){
+            //   nav.Warp(hit.position);
+            //   
+            //}
+            ennemie.transform.position = spawns[Random.Range(0, spawns.Length)].transform.position;
+
+              nav.Warp(ennemie.transform.position);
+            nav.enabled = true;
+
+            ennemie.SetActive(true);
+            PoursuivreJoueur mettredestionaion=  ennemie.GetComponent<PoursuivreJoueur>();
+           // mettredestionaion.destination();
+        }
+           
             delay = 5;
         }
     }
-}
+

@@ -151,7 +151,7 @@ namespace Anthony
                 if (peutAttaquer)
 
                 {
-                    Debug.Log(quiAttaque + 1);
+                   
                     quiAttaque = (int)root.GetData("quiAttaquer");
 
                     State = children[quiAttaque + 1].Evaluate();
@@ -271,14 +271,13 @@ namespace Anthony
 
         public override NodeState Evaluate()
         {
-           Debug.Log("WaitTime");
+          // Debug.Log("WaitTime");
             State = NodeState.Running;
             bool distance =(Boolean)root.GetData("distance");
            bool surboss = (Boolean)root.GetData("surboss");
             bool millieu = (Boolean)root.GetData("millieu");
             bool peutAttaquer = (Boolean)root.GetData("peutAttaquer");
-            Debug.Log(surboss); 
-                 Debug.Log(millieu);
+           
             if (!peutAttaquer)
             {
                 if (!surboss)
@@ -474,7 +473,7 @@ namespace Anthony
                 if (compteurTempsEntreChoc >= tempsEntreChoc)
                 {
 
-                    GameObject LeChoc = ObjectPool.objectPool.GetObject(OndeDeChoc);
+                    GameObject LeChoc = ObjectPool.objectPool.GetObject(OndeDeChoc);    
                     OndeChoc scripChoc = LeChoc.GetComponent<OndeChoc>();
                     //scripChoc.Grosseur(2);
                     LeChoc.transform.position = départ.position;

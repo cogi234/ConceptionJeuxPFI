@@ -1,21 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class CubeController : MonoBehaviour
+public class CoreMovement : MonoBehaviour
 {
-    public enum CubeAction { Nothing, GoToTarget, Transition }
+    public enum CoreAction { Nothing, GoToTarget, Transition }
 
+    [Header("Transition/Physics stuff")]
     public Transform target;
-    public Color Color { get => material.color; set => material.color = value; }
-    public CubeAction currentAction = CubeAction.GoToTarget;
-
+    public CoreAction currentAction = CoreAction.Nothing;
     [Header("Springs")]
     [SerializeField] float positionStiffness;
     [SerializeField] float positionDamper;
     [SerializeField] float rotationStiffness, rotationDamper;
     [Header("Transition")]
     public float transitionTime;
-    
+
     Rigidbody rb;
     Material material;
     float transitionTimer;
@@ -25,22 +26,20 @@ public class CubeController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        material = new Material(GetComponent<MeshRenderer>().material);
-        GetComponent<MeshRenderer>().material = material;
     }
 
     private void FixedUpdate()
     {
         switch (currentAction)
         {
-            case CubeAction.Nothing:
+            case CoreAction.Nothing:
                 if (rb.isKinematic)
                     rb.isKinematic = false;
                 break;
-            case CubeAction.GoToTarget:
+            case CoreAction.GoToTarget:
                 FixedGoToTarget();
                 break;
-            case CubeAction.Transition:
+            case CoreAction.Transition:
                 break;
         }
     }
@@ -48,11 +47,11 @@ public class CubeController : MonoBehaviour
     {
         switch (currentAction)
         {
-            case CubeAction.Nothing:
+            case CoreAction.Nothing:
                 break;
-            case CubeAction.GoToTarget:
+            case CoreAction.GoToTarget:
                 break;
-            case CubeAction.Transition:
+            case CoreAction.Transition:
                 Transition();
                 break;
         }
@@ -100,7 +99,7 @@ public class CubeController : MonoBehaviour
             if (Mathf.Abs(z2 - z1) < Mathf.Abs(z2 - z1 + 360) && Mathf.Abs(z2 - z1) < Mathf.Abs(z2 - z1 - 360))
                 rotationDifference.z = z2 - z1;
             else if (Mathf.Abs(z2 - z1 + 360) < Mathf.Abs(z2 - z1 - 360))
-                rotationDifference.z =  z2 - z1 + 360;
+                rotationDifference.z = z2 - z1 + 360;
             else
                 rotationDifference.z = z2 - z1 - 360;
         }
@@ -131,9 +130,10 @@ public class CubeController : MonoBehaviour
         transitionTimer += Time.deltaTime;
         if (transitionTimer >= transitionTime)
         {
-            currentAction = CubeAction.GoToTarget;
+            currentAction = CoreAction.GoToTarget;
             GetComponent<Collider>().enabled = false;
             rb.isKinematic = false;
         }
     }
+
 }

@@ -7,11 +7,11 @@ public class DamageableComponent : MonoBehaviour
 {
     //Events for taking damage and healing
     /// <summary>
-    /// Prends dommage pris comme argument
+    /// Damage taken as argument
     /// </summary>
     public UnityEvent<int> onDamage = new UnityEvent<int>();
     /// <summary>
-    /// Prends guerison comme argument
+    /// Damage healed as argument
     /// </summary>
     public UnityEvent<int> onHeal = new UnityEvent<int>();
 

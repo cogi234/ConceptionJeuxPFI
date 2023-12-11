@@ -50,6 +50,7 @@ MonoBehaviour:
   explosionRadius: 30
   explosionForce: 10
   explosionUpModifier: 1
+  coreTransitionTime: 3
   cubePrefab: {fileID: 7238438788582957988, guid: 034e60646a9512343ad6c2c6b357e53a, type: 3}
   cubesPerSecond: 20
   cubeTransitionTime: 1

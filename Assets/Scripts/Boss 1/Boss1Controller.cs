@@ -11,6 +11,7 @@ public class Boss1Controller : MonoBehaviour
     [SerializeField] float explosionRadius;
     [SerializeField] float explosionForce;
     [SerializeField] float explosionUpModifier;
+    [SerializeField] float coreTransitionTime;
     [Header("Cube Spawning")]
     [SerializeField] GameObject cubePrefab;
     [SerializeField] float cubesPerSecond;
@@ -36,6 +37,7 @@ public class Boss1Controller : MonoBehaviour
         core = GameObject.Find("Core").transform;
         core.GetComponent<DamageableComponent>().onDamage.AddListener(TakeDamage);
         core.GetComponent<DamageableComponent>().enabled = false;
+        core.GetComponent<InteractableComponent>().onInteract.AddListener(StartFight);
 
         cubes = new List<CubeController>();
         inactiveCubes = new List<CubeController>();
@@ -61,6 +63,12 @@ public class Boss1Controller : MonoBehaviour
         {
             DeactivateCube();
         }
+    }
+
+    public void StartFight()
+    {
+        StartCoroutine(PhaseTransition());
+        Destroy(core.GetComponent<InteractableComponent>());
     }
 
     private IEnumerator PhaseTransition()
@@ -116,6 +124,8 @@ public class Boss1Controller : MonoBehaviour
         targets = targetList.ToArray();
 
         core.GetComponent<CoreMovement>().target = coreTarget;
+        core.GetComponent<CoreMovement>().currentAction = CoreMovement.CoreAction.Transition;
+        core.GetComponent<CoreMovement>().transitionTime = coreTransitionTime;
     }
 
     private void SpawnCube()

@@ -28,13 +28,14 @@ public class PlayerController : MonoBehaviour
     bool sprinting = false;
     bool jumping = false;
     float cameraAngle = 0;
+    Animator animator;
 
     public bool Grounded { get; private set; }
 
     private void Awake()
     {
-        //Setup rigidbody
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -44,7 +45,7 @@ public class PlayerController : MonoBehaviour
         playerInput.FindAction("Move").performed += MoveCall;
         playerInput.FindAction("Move").canceled += MoveCall;
         playerInput.FindAction("Look").performed += LookCall;
-        playerInput.FindAction("Attack");
+        playerInput.FindAction("Attack").performed += (InputAction.CallbackContext action) => animator.SetTrigger("Swing");
         playerInput.FindAction("Jump").performed += (InputAction.CallbackContext action) => jumping = true;
         playerInput.FindAction("Jump").canceled += (InputAction.CallbackContext action) => jumping = false;
         playerInput.FindAction("Sprint").performed += (InputAction.CallbackContext action) => sprinting = true;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using BehaviourTreeColin;
 
 public class Boss1Controller : MonoBehaviour
 {
@@ -21,7 +22,9 @@ public class Boss1Controller : MonoBehaviour
     [SerializeField] int maxHealth = 100;
     int health;
 
-
+    Node[] behaviourTrees;
+    Dictionary<string, object> data = new Dictionary<string, object>();
+    Transform player;
     Transform core;
     Transform coreTarget;
     Transform[] targets;
@@ -29,15 +32,33 @@ public class Boss1Controller : MonoBehaviour
     List<CubeController> inactiveCubes;
     float cubeTime;
     float cubeTimer;
-
     int currentPhase = -1;
+    public bool PlayerOnMe
+    {
+        get
+        {
+            return (bool)data["playerOnBoss"];
+        }
+        set
+        {
+            data["playerOnBoss"] = value;
+        }
+    }
 
     private void Awake()
     {
+        behaviourTrees = new Node[]
+        {
+            BehaviourTreeCreator.GetBoss1()
+        };
+
         core = GameObject.Find("Core").transform;
         core.GetComponent<DamageableComponent>().onDamage.AddListener(TakeDamage);
         core.GetComponent<DamageableComponent>().enabled = false;
         core.GetComponent<InteractableComponent>().onInteract.AddListener(StartFight);
+
+        data["playerTransform"] = GameObject.FindWithTag("Player").transform;
+        data["bossController"] = this;
 
         cubes = new List<CubeController>();
         inactiveCubes = new List<CubeController>();
@@ -48,6 +69,7 @@ public class Boss1Controller : MonoBehaviour
 
     private void Update()
     {
+
         //Cube spawning
         if (cubes.Count < targets.Length)
         {
@@ -63,6 +85,10 @@ public class Boss1Controller : MonoBehaviour
         {
             DeactivateCube();
         }
+
+        //Evaluating behaviour tree
+        if (currentPhase >= 0 && currentPhase < behaviourTrees.Length)
+            behaviourTrees[currentPhase].Evaluate(data);
     }
 
     public void StartFight()
@@ -110,7 +136,8 @@ public class Boss1Controller : MonoBehaviour
 
     private void CreateBody()
     {
-        Instantiate(bodyPrefabs[currentPhase], transform);
+        GameObject body = Instantiate(bodyPrefabs[currentPhase], transform);
+        data["body"] = body;
 
         //We find every target in the new body
         List<Transform> targetList = new List<Transform>();

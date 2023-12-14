@@ -204,7 +204,7 @@ MonoBehaviour:
   onHeal:
     m_PersistentCalls:
       m_Calls: []
-  invincibilityTime: 2
+  invincibilityTime: 0
 --- !u!114 &6460613537106907867
 MonoBehaviour:
   m_ObjectHideFlags: 0

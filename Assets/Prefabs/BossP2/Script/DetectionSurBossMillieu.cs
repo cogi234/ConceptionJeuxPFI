@@ -14,7 +14,7 @@ public class DetectionSurBossMillieu : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("DANS TRIGGER SUR BOSS");
+      
 
         NodeBoss.DansMilieu.DansMillieu = true;
 

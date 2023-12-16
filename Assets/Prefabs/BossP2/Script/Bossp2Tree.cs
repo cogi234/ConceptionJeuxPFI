@@ -153,7 +153,7 @@ namespace Anthony
                 {
                    
                     quiAttaque = (int)root.GetData("quiAttaquer");
-
+                 
                     State = children[quiAttaque + 1].Evaluate();
 
 
@@ -275,7 +275,7 @@ namespace Anthony
             State = NodeState.Running;
             bool distance =(Boolean)root.GetData("distance");
            bool surboss = (Boolean)root.GetData("surboss");
-            bool millieu = (Boolean)root.GetData("millieu");
+           // bool millieu = (Boolean)root.GetData("millieu");
             bool peutAttaquer = (Boolean)root.GetData("peutAttaquer");
            
             if (!peutAttaquer)
@@ -300,21 +300,17 @@ namespace Anthony
                 else
                 {
 
-                    if (millieu)
-                    {
+                    
                         etatEnCour = 2;
                         root.SetData("quiAttaquer", etatEnCour);
-                    }
-                    else
-                    {
-                        etatEnCour = 3;
-                        root.SetData("quiAttaquer", etatEnCour);
-                    }
+                   
+                   
                 }
+          
                 if (etatEnCour != etatPasser)
                 {
                     etatPasser = etatEnCour;
-                    ListeTemps = new List<float> { 0, 0, 0, 0 };
+                    ListeTemps = new List<float> { 0, 0, 0 };
                 }
                 else
                 {
@@ -351,14 +347,14 @@ namespace Anthony
         Transform pointDépart;
         int nombreMissile;
         Transform[] zonneDeTire;
-        int TempsentreMissile;
+        float TempsentreMissile;
         float compteurTemps = 0;
         int CompteurNBmissileTirer =0 ;
         int CompteurPositionTire = 0;
         GameObject missile;
        
         Transform joueur;
-        public Missile(int nombreMissile, GameObject zoneTire, int TempsentreMissile,
+        public Missile(int nombreMissile, GameObject zoneTire, float TempsentreMissile,
             GameObject Missile, Transform joueur) : base()
         {
             this.nombreMissile = nombreMissile;
@@ -571,7 +567,7 @@ namespace Anthony
 
                     GameObject LeChoc = ObjectPool.objectPool.GetObject(Blockfall);
 
-                    Debug.Log(départ.Length);
+                    
                     LeChoc.transform.position = départ[CompteurPosition%départ.Length].position;
                     LeChoc.SetActive(true);
                     CompteurPosition++;
@@ -647,7 +643,7 @@ namespace Anthony
 
         public override NodeState Evaluate()
         {
-            Debug.Log("dansBlockTrap");
+          
             return State;
         }
 

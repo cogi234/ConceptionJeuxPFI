@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5544748725972771935}
   - component: {fileID: 95056679505925548}
+  - component: {fileID: 363918667603540709}
   m_Layer: 0
   m_Name: T MillieuP
   m_TagString: Untagged
@@ -48,6 +49,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f84cfc391a9137c4bb81c39f19b9a7e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TTl: 20
+  vitesse: 5
+  degat: 1
+--- !u!65 &363918667603540709
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3957654362270690736}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1168588838472179413
 PrefabInstance:
   m_ObjectHideFlags: 0

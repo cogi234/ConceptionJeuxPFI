@@ -48,7 +48,7 @@ public class SpawnerEnnemi : MonoBehaviour
 
             ennemie.SetActive(true);
             PoursuivreJoueur mettredestionaion=  ennemie.GetComponent<PoursuivreJoueur>();
-           // mettredestionaion.destination();
+            mettredestionaion.destination();
         }
            
             delay = 5;

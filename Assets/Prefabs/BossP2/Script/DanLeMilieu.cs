@@ -7,7 +7,7 @@ public class DanLeMilieu : MonoBehaviour
     Bossp2Composant NodeBoss;
     private void Start()
     {
-        NodeBoss = GameObject.FindGameObjectWithTag("BossP2").GetComponent<Bossp2Composant>(); ;
+        NodeBoss = GameObject.FindGameObjectWithTag("BossP2").GetComponent<Bossp2Composant>() ;
     }
 
     private void OnTriggerEnter(Collider other)

@@ -16,11 +16,11 @@ public class Bossp2Composant : MonoBehaviour
     [SerializeField] float DistanceCac = 150;
     [SerializeField] float attente = 10;
     [SerializeField] int nombreDeMissile = 5;
-    [SerializeField] int TempsentreMissileDistance = 2;
+    [SerializeField] float TempsentreMissileDistance = 1;
     [SerializeField] int nombreDeChoc= 5;
-    [SerializeField] int TempsentreChoc = 2;
+    [SerializeField] float TempsentreChoc = 1;
     [SerializeField] int nombreDeBlocMillieu= 5;
-    [SerializeField] int TempsentreBlocMillieu = 2;
+    [SerializeField] float TempsentreBlocMillieu = 1;
     [SerializeField] GameObject Missile;
     [SerializeField] GameObject Choc;
     [SerializeField] GameObject MillieuBloc;
@@ -51,8 +51,8 @@ public class Bossp2Composant : MonoBehaviour
         //Tout les node sol
         //tirenode
         Missile misile = new Missile(nombreDeMissile, ZoneTire, TempsentreMissileDistance, Missile,joueur.transform); 
-        Node BouleFeu = new BoulleDeFeu();
-       Node Seq1Tire = new Sequence(new List<Node> { misile, BouleFeu });
+       // Node BouleFeu = new BoulleDeFeu();
+       Node Seq1Tire = new Sequence(new List<Node> { misile});
         //distanceNode
         distance = new Distance(joueur.transform, Boss.transform, DistanceCac);
         WaitTime Wait = new WaitTime(attente);
@@ -73,9 +73,9 @@ public class Bossp2Composant : MonoBehaviour
         // Tout les nodes SurBoss
 
         //TrapdosSequence
-        Node blockTrap = new BlockTrap();
-        Node smalMisile = new SmallMissile();
-        Node Seq5SurDosTrap = new Sequence(new List<Node> { blockTrap, smalMisile });
+       // Node blockTrap = new BlockTrap();
+       // Node smalMisile = new SmallMissile();
+      //  Node Seq5SurDosTrap = new Sequence(new List<Node> { blockTrap, smalMisile });
 
         //surDosSequence
         DansMilieu = new Millieu();
@@ -101,7 +101,7 @@ public class Bossp2Composant : MonoBehaviour
         Node Seq9SurBoss = new Sequence(new List<Node> { SurBoss, SurBossSelector});
 
         //phase d'attaque
-        SequenceAttaque SequenceAttaque = new SequenceAttaque(new List<Node> { Cinema, Seq1Tire,shokWave,Seq7MillieuTrap, Seq5SurDosTrap });
+        SequenceAttaque SequenceAttaque = new SequenceAttaque(new List<Node> { Cinema, Seq1Tire,shokWave,Seq7MillieuTrap /*Seq5SurDosTrap */});
 
         //Root
         Node RootSelector  =  new Selector(new List<Node>() { SequenceAttaque, Seq4Sol, Seq9SurBoss });

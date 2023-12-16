@@ -64,8 +64,8 @@ public class Entrerp2 : MonoBehaviour
     [SerializeField] float compteurAvantCri=0.5f;
     float compteurCri;
     bool triggerAnimation = true;
-   
-    
+
+  [SerializeField]  float tempsAnimation = 3;
     private void Update()
     {
 
@@ -193,21 +193,29 @@ public class Entrerp2 : MonoBehaviour
          }
          if(BlocDownfallList2.Count == 0 && BlocDownfallList.Count == 0)
          {
-                if (triggerAnimation)
+                if (tempsAnimation<0)
                 {
-                    animator.SetTrigger("DebutCri");
-                }
-            if(compteurCri> compteurAvantCri)
-            {
-                    audioSource.Play();
-                    finDeEntrer = true;
-            }
-            else
-            {
-                compteurCri+= Time.deltaTime;
-            }
-               
 
+
+                    if (triggerAnimation)
+                    {
+                        animator.SetTrigger("DebutCri");
+                    }
+                    if (compteurCri > compteurAvantCri)
+                    {
+                        audioSource.Play();
+                        finDeEntrer = true;
+                    }
+                    else
+                    {
+                        compteurCri += Time.deltaTime;
+                    }
+
+                }
+                else
+                {
+                    tempsAnimation -= Time.deltaTime;
+                }
           }
 
         }

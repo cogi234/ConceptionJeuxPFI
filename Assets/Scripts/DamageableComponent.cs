@@ -43,4 +43,11 @@ public class DamageableComponent : MonoBehaviour
         if (invincibilityTimer > 0)
             invincibilityTimer -= Time.deltaTime;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        int vie = 1;
+        vie -= 1;
+    }
 }

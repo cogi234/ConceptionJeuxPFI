@@ -49,7 +49,7 @@ namespace BehaviourTreeColin
             {
                 Vector2 rotationDiff = targetRotation - currentRotation;
 
-                if (Mathf.Abs(rotationDiff.y) < rotationMargin && Mathf.Abs(rotationDiff.x) < rotationMargin)
+                if (Mathf.Abs(rotationDiff.y) < rotationMargin && Mathf.Abs(rotationDiff.x) < rotationMargin && (bool)data["canShoot"] && !(bool)data["playerOnBoss"])
                 {
                     shooting = true;
                     ((Transform)data["coreTarget"]).GetChild(1).gameObject.SetActive(true);

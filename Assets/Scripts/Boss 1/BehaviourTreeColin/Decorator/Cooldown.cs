@@ -17,7 +17,7 @@ namespace BehaviourTreeColin
             if (timer <= 0)
             {
                 NodeState childState = children[0].Evaluate(data);
-                if (childState != NodeState.Running)
+                if (childState == NodeState.Success)
                     timer = cooldown;
                 return childState;
             }

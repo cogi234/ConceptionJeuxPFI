@@ -22,13 +22,4 @@ public class OnBossTrigger : MonoBehaviour
         if (other.tag == "Player")
             controller.PlayerOnMe = false;
     }
-
-    private void OnDestroy()
-    {
-        controller.PlayerOnMe = false;
-    }
-    private void OnDisable()
-    {
-        controller.PlayerOnMe = false;
-    }
 }

@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Vector3 groundedRaycastOrigin;
     [SerializeField] float groundedRaycastLength;
     [SerializeField] LayerMask groundedRaycastLayers;
+    [Header("Health")]
+    [SerializeField] float maxHealth = 5;
+    [SerializeField] SmoothHealthBar healthBar;
+    float health;
 
     Rigidbody rb;
     Vector3 moveDirection;
@@ -34,6 +38,10 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        health = maxHealth;
+        healthBar.value = health;
+        GetComponent<DamageableComponent>().onDamage.AddListener(TakeDamage);
+
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
 
@@ -100,5 +108,23 @@ public class PlayerController : MonoBehaviour
             dampForce.y = 0;
             rb.AddForce(dampForce);
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (health > 0)
+        {
+            health -= damage;
+            health = Mathf.Max(health, 0);
+            healthBar.value = health;
+
+            if (health <= 0)
+                OnDeath();
+        }
+    }
+
+    void OnDeath()
+    {
+        //TODO
     }
 }

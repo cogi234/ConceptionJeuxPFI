@@ -21,6 +21,9 @@ public class DamageableComponent : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (!enabled)
+            return;
+
         //If we're not invincible
         if (invincibilityTimer <= 0)
         {
@@ -34,20 +37,18 @@ public class DamageableComponent : MonoBehaviour
 
     public void Heal(int healing)
     {
+        if (!enabled)
+            return;
         onHeal.Invoke(healing);
     }
 
     private void Update()
     {
+        if (!enabled)
+            return;
+
         //Invincibility timer
         if (invincibilityTimer > 0)
             invincibilityTimer -= Time.deltaTime;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        int vie = 1;
-        vie -= 1;
     }
 }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3682487933465272464}
   - component: {fileID: 1810726083662781488}
   - component: {fileID: 3342516652242987144}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,10 +149,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   currentAction: 1
-  positionStiffness: 1000
-  positionDamper: 100
-  rotationStiffness: 10
-  rotationDamper: 50
+  positionStiffness: 100
+  positionDamper: 10
+  rotationStiffness: 200
+  rotationDamper: 20
   transitionTime: 0
 --- !u!114 &3342516652242987144
 MonoBehaviour:

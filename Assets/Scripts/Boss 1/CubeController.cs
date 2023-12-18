@@ -70,45 +70,29 @@ public class CubeController : MonoBehaviour
         //Spring
         Vector3 positionDifference = target.position - transform.position;
         Vector3 positionSpringForce = positionDifference * positionStiffness;
-        rb.AddForce(positionSpringForce, ForceMode.Force);
+        rb.AddForce(positionSpringForce, ForceMode.Acceleration);
         //Damper
         Vector3 positionDamperForce = -rb.velocity * positionDamper;
-        rb.AddForce(positionDamperForce, ForceMode.Force);
+        rb.AddForce(positionDamperForce, ForceMode.Acceleration);
 
         //Rotation
         //Spring
-        Vector3 rotationDifference = new Vector3();
+        Quaternion rotationChange = target.rotation * Quaternion.Inverse(rb.rotation);
+        rotationChange.ToAngleAxis(out float angle, out Vector3 axis);
+        if (angle > 180)
+            angle -= 360;
+
+        if (!Mathf.Approximately(angle, 0))
         {
-            //x
-            float x1 = transform.rotation.eulerAngles.x % 360, x2 = target.rotation.eulerAngles.x % 360;
-            if (Mathf.Abs(x2 - x1) < Mathf.Abs(x2 - x1 + 360) && Mathf.Abs(x2 - x1) < Mathf.Abs(x2 - x1 - 360))
-                rotationDifference.x = x2 - x1;
-            else if (Mathf.Abs(x2 - x1 + 360) < Mathf.Abs(x2 - x1 - 360))
-                rotationDifference.x = x2 - x1 + 360;
-            else
-                rotationDifference.x = x2 - x1 - 360;
-            //y
-            float y1 = transform.rotation.eulerAngles.y % 360, y2 = target.rotation.eulerAngles.y % 360;
-            if (Mathf.Abs(y2 - y1) < Mathf.Abs(y2 - y1 + 360) && Mathf.Abs(y2 - y1) < Mathf.Abs(y2 - y1 - 360))
-                rotationDifference.y = y2 - y1;
-            else if (Mathf.Abs(y2 - y1 + 360) < Mathf.Abs(y2 - y1 - 360))
-                rotationDifference.y = y2 - y1 + 360;
-            else
-                rotationDifference.y = y2 - y1 - 360;
-            //z
-            float z1 = transform.rotation.eulerAngles.z % 360, z2 = target.rotation.eulerAngles.z % 360;
-            if (Mathf.Abs(z2 - z1) < Mathf.Abs(z2 - z1 + 360) && Mathf.Abs(z2 - z1) < Mathf.Abs(z2 - z1 - 360))
-                rotationDifference.z = z2 - z1;
-            else if (Mathf.Abs(z2 - z1 + 360) < Mathf.Abs(z2 - z1 - 360))
-                rotationDifference.z =  z2 - z1 + 360;
-            else
-                rotationDifference.z = z2 - z1 - 360;
+            angle *= Mathf.Deg2Rad;
+            Vector3 rotationDiff = axis * angle;
+            Vector3 rotationSpringForce = rotationDiff * rotationStiffness;
+            rb.AddTorque(rotationSpringForce, ForceMode.Acceleration);
         }
-        Vector3 rotationSpringForce = rotationDifference * rotationStiffness;
-        rb.AddTorque(rotationSpringForce, ForceMode.Force);
+
         //Damper
         Vector3 rotationDamperForce = -rb.angularVelocity * rotationDamper;
-        rb.AddTorque(rotationDamperForce, ForceMode.Force);
+        rb.AddTorque(rotationDamperForce, ForceMode.Acceleration);
     }
 
     void Transition()
@@ -131,8 +115,10 @@ public class CubeController : MonoBehaviour
         transitionTimer += Time.deltaTime;
         if (transitionTimer >= transitionTime)
         {
+            transform.position = target.position;
+            transform.rotation = target.rotation;
             currentAction = CubeAction.GoToTarget;
-            GetComponent<Collider>().enabled = false;
+            GetComponent<Collider>().enabled = true;
             rb.isKinematic = false;
         }
     }

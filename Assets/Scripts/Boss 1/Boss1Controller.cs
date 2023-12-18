@@ -6,12 +6,12 @@ using BehaviourTreeColin;
 
 public class Boss1Controller : MonoBehaviour
 {
-    [Header("Phases")]
-    [SerializeField] GameObject[] bodyPrefabs;
-    [SerializeField] float phaseTransitionTime;
+    [Header("Spawning and death")]
+    [SerializeField] GameObject bodyPrefab;
     [SerializeField] float explosionRadius;
     [SerializeField] float explosionForce;
     [SerializeField] float explosionUpModifier;
+    [SerializeField] GameObject explosionPrefab;
     [SerializeField] float coreTransitionTime;
     [Header("Cube Spawning")]
     [SerializeField] GameObject cubePrefab;
@@ -20,19 +20,26 @@ public class Boss1Controller : MonoBehaviour
     [SerializeField] float maxCubeSpawnRadius;
     [Header("Health")]
     [SerializeField] int maxHealth = 100;
+    [SerializeField] SmoothHealthBar healthBar;
     int health;
+    [Header("Movement")]
+    public float rotationSpeed = 45f;
+    public float movementSpeed;
+    public float jumpMaxDistance;
+    public float jumpMinDistance;
 
-    Node[] behaviourTrees;
+    Node behaviourTree;
     Dictionary<string, object> data = new Dictionary<string, object>();
     Transform player;
     Transform core;
     Transform coreTarget;
-    Transform[] targets;
+    Transform[] targets = new Transform[0];
     List<CubeController> cubes;
     List<CubeController> inactiveCubes;
     float cubeTime;
     float cubeTimer;
-    int currentPhase = -1;
+    bool processBrain = false;
+
     public bool PlayerOnMe
     {
         get
@@ -47,29 +54,33 @@ public class Boss1Controller : MonoBehaviour
 
     private void Awake()
     {
-        behaviourTrees = new Node[]
-        {
-            BehaviourTreeCreator.GetBoss1()
-        };
+        health = maxHealth;
+        healthBar.value = health;
+
+        player = GameObject.FindWithTag("Player").transform;
 
         core = GameObject.Find("Core").transform;
         core.GetComponent<DamageableComponent>().onDamage.AddListener(TakeDamage);
         core.GetComponent<DamageableComponent>().enabled = false;
         core.GetComponent<InteractableComponent>().onInteract.AddListener(StartFight);
 
-        data["playerTransform"] = GameObject.FindWithTag("Player").transform;
+        //Set behaviour tree data
+        behaviourTree = BehaviourTreeCreator.GetBoss1();
+        data["playerTransform"] = player;
         data["bossController"] = this;
+        data["bossTransform"] = transform;
+        data["canShoot"] = true;
+        data["currentAttack"] = "";
+        data["attackCooldown"] = 5f;
+        PlayerOnMe = false;
 
         cubes = new List<CubeController>();
         inactiveCubes = new List<CubeController>();
         cubeTime = 1 / cubesPerSecond;
-
-        targets = GameObject.FindGameObjectsWithTag("target").Select((GameObject g, int index) => { return g.transform; }).ToArray();
     }
 
     private void Update()
     {
-
         //Cube spawning
         if (cubes.Count < targets.Length)
         {
@@ -87,57 +98,32 @@ public class Boss1Controller : MonoBehaviour
         }
 
         //Evaluating behaviour tree
-        if (currentPhase >= 0 && currentPhase < behaviourTrees.Length)
-            behaviourTrees[currentPhase].Evaluate(data);
+        data["playerDistance"] = Vector3.Distance(transform.position, player.position);
+        if (processBrain)
+            behaviourTree.Evaluate(data);
     }
 
     public void StartFight()
     {
-        StartCoroutine(PhaseTransition());
-        Destroy(core.GetComponent<InteractableComponent>());
+        StartCoroutine(Introduction());
+        core.GetComponent<InteractableComponent>().enabled = false;
+        healthBar.gameObject.SetActive(true);
     }
 
-    private IEnumerator PhaseTransition()
+    private IEnumerator Introduction()
     {
-        //Deactivate every cube
-        while (cubes.Count > 0)
-        {
-            DeactivateCube();
-        }
-        if (transform.childCount > 0)
-        {
-            //Explosion
-            Collider[] hits = Physics.OverlapSphere(transform.GetChild(0).position, explosionForce);
-            foreach (Collider hit in hits)
-            {
-                Rigidbody rb = hit.GetComponent<Rigidbody>();
-                if (rb != null)
-                    rb.AddExplosionForce(explosionForce, transform.GetChild(0).position, explosionRadius, explosionUpModifier);
-            }
-            //Destroy the body
-            Destroy(transform.GetChild(0).gameObject);
-        }
-        currentPhase++;
-        //Disable damage
-        core.GetComponent<DamageableComponent>().enabled = false;
-
-        yield return new WaitForSeconds(phaseTransitionTime);
-
-        if (currentPhase >= bodyPrefabs.Length)
-            OnFinalDeath();
-        else
-        {
-            CreateBody();
-            //We enable taking damage and heal to max
-            core.GetComponent<DamageableComponent>().enabled = true;
-            health = maxHealth;
-        }
+        yield return new WaitForSeconds(2);
+        CreateBody();
+        //We enable taking damage
+        core.GetComponent<DamageableComponent>().enabled = true;
+        yield return new WaitForSeconds(6);
+        processBrain = true;
     }
 
     private void CreateBody()
     {
-        GameObject body = Instantiate(bodyPrefabs[currentPhase], transform);
-        data["body"] = body;
+        GameObject body = Instantiate(bodyPrefab, transform);
+        data["body"] = body.transform;
 
         //We find every target in the new body
         List<Transform> targetList = new List<Transform>();
@@ -149,6 +135,8 @@ public class Boss1Controller : MonoBehaviour
                 coreTarget = t;
         }
         targets = targetList.ToArray();
+
+        data["coreTarget"] = coreTarget;
 
         core.GetComponent<CoreMovement>().target = coreTarget;
         core.GetComponent<CoreMovement>().currentAction = CoreMovement.CoreAction.Transition;
@@ -194,6 +182,8 @@ public class Boss1Controller : MonoBehaviour
         if (health > 0)
         {
             health -= damage;
+            health = Mathf.Max(health, 0);
+            healthBar.value = health;
 
             if (health <= 0)
                 OnDeath();
@@ -202,11 +192,25 @@ public class Boss1Controller : MonoBehaviour
 
     private void OnDeath()
     {
-        StartCoroutine(PhaseTransition());
-    }
-
-    private void OnFinalDeath()
-    {
-        //TODO
+        processBrain = false;
+        //Deactivate every cube
+        while (cubes.Count > 0)
+        {
+            DeactivateCube();
+        }
+        if (transform.childCount > 0)
+        {
+            //Explosion
+            Explosion explosion = Instantiate(explosionPrefab, transform.GetChild(0).position, transform.GetChild(0).rotation).GetComponent<Explosion>();
+            explosion.force = explosionForce;
+            explosion.radius = explosionRadius;
+            explosion.upModifier = explosionUpModifier;
+            //Destroy the body
+            Destroy(transform.GetChild(0).gameObject);
+        }
+        //Disable damage
+        core.GetComponent<CoreMovement>().target = null;
+        core.GetComponent<CoreMovement>().currentAction = CoreMovement.CoreAction.Nothing;
+        core.GetComponent<DamageableComponent>().enabled = false;
     }
 }

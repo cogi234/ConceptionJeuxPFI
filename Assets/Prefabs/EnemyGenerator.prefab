@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2094275851811677888}
   m_Layer: 0
-  m_Name: EnnemieGenerator
+  m_Name: EnemyGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

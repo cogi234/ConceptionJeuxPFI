@@ -27,9 +27,10 @@ public class CameraInteract : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.forward, out hit, 25, LayerMask.GetMask("Interactable")) && Vector3.Distance(hit.point, player.position) < interactionDistance)
         {
             InteractableComponent i = hit.transform.GetComponent<InteractableComponent>();
-            if (i != null)
+            if (i != null && i.enabled == true)
                 canInteract = true;
         }
+
         if (canInteract && !interactText.activeInHierarchy)
         {
             //If we hit an interactable and the interact text isn't active, we activate it;
@@ -48,7 +49,7 @@ public class CameraInteract : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.forward, out hit, 25, LayerMask.GetMask("Interactable")) && Vector3.Distance(hit.point, player.position) < interactionDistance)
         {
             InteractableComponent i = hit.transform.GetComponent<InteractableComponent>();
-            if (i != null)
+            if (i != null && i.enabled == true)
                 i.Interact();
         }
     }

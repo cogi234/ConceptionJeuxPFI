@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface Idatapersistant
 {
-    void sauvegarde(SceneStat data);
-    void charger(ref SceneStat data);
+   public void charger (SceneStat data);
+    public  void sauvegarde(ref SceneStat data);
 }

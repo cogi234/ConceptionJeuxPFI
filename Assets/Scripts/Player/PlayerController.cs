@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour ,Idatapersistant
 {
     [SerializeField] InputActionAsset inputAsset;
     [Header("Movement")]
@@ -128,4 +128,21 @@ public class PlayerController : MonoBehaviour
     {
         //TODO
     }
+
+    
+
+    public void charger(SceneStat data)
+    {
+        health = data.VieJoueur;
+        if (data.PositionJoueur != null)
+        {
+            gameObject.transform.position = data.PositionJoueur;
+        }
+    }
+    public void sauvegarde(ref SceneStat data) {
+
+        data.VieJoueur = health;
+        data.PositionJoueur = gameObject.transform.position;
+        
+            }
 }

@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class SceneStat : MonoBehaviour
+[System.Serializable]
+public class SceneStat
 {
-    int Scene;
-    int Vie;
-    int VieJoueur;
-    bool CinématiqueenCour;
-    Transform PositionJoueur;
+   public int Scene;
+    public int VieBoss;
+    public float VieJoueur;
+    public bool CinématiqueenCour;
+    public Vector3  PositionJoueur;
 
-
+    public SceneStat()
+    {
+        VieJoueur = 5;
+         VieBoss = 100;
+        Scene = 1;
+        CinématiqueenCour = true;
+    }
 
 }

@@ -29,8 +29,12 @@ public class SpawnerEnnemi : MonoBehaviour
     {
        
             GameObject ennemie = ObjectPool.objectPool.GetObject(ennemy[compteurEnnemie]);
-            
-            if (ennemie != null)
+        compteurEnnemie++;
+        if (compteurEnnemie >= ennemy.Count)
+        {
+            compteurEnnemie = 0;
+        }
+        if (ennemie != null)
             {
 
                 NavMeshAgent nav = ennemie.GetComponent<NavMeshAgent>();

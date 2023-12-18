@@ -224,5 +224,18 @@ public class Entrerp2 : MonoBehaviour
         {
             cinematique.cinematique = false;
         }
+
+    }
+    public void charger(SceneStat data)
+    {
+        cinematique.cinematique = data.CinématiqueenCour;
+
+    }
+    public void sauvegarde(ref SceneStat data)
+    {
+
+        data.CinématiqueenCour = cinematique.cinematique;
+
+
     }
 }

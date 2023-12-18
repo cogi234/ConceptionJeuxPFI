@@ -56,8 +56,8 @@ MonoBehaviour:
   cubeTransitionTime: 1
   maxCubeSpawnRadius: 20
   maxHealth: 5
-  healthBar: {fileID: 8106044147568001587}
-  rotationSpeed: 45
+  healthBar: {fileID: 7355280995181393661}
+  rotationSpeed: 0.5
   movementSpeed: 0
   jumpMaxDistance: 40
   jumpMinDistance: 20
@@ -394,7 +394,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4576348795210034975}
   - component: {fileID: 7355280995181393661}
-  - component: {fileID: 8106044147568001587}
   m_Layer: 5
   m_Name: BossHealthBar
   m_TagString: Untagged
@@ -476,20 +475,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8106044147568001587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8800544082168623526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eca244a5f5d64cc439b8161cb4a674e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lerp: 0
-  value: 0
 --- !u!1 &8934104973955800238
 GameObject:
   m_ObjectHideFlags: 0

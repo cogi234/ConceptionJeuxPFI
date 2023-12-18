@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask groundedRaycastLayers;
     [Header("Health")]
     [SerializeField] float maxHealth = 5;
-    [SerializeField] SmoothHealthBar healthBar;
+    [SerializeField] Slider healthBar;
     float health;
 
     Rigidbody rb;

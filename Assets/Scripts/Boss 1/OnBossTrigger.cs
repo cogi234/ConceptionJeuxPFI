@@ -8,7 +8,7 @@ public class OnBossTrigger : MonoBehaviour
 
     private void Awake()
     {
-        controller = GetComponent<Boss1Controller>();
+        controller = transform.parent.GetComponent<Boss1Controller>();
     }
 
     private void OnTriggerEnter(Collider other)

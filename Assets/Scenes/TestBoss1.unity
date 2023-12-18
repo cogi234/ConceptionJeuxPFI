@@ -698,10 +698,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss1
       objectReference: {fileID: 0}
-    - target: {fileID: 3820584316220235769, guid: d19209add334aa34a8d9720961aa9452, type: 3}
-      propertyPath: rotationSpeed
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 8678281008685863507, guid: d19209add334aa34a8d9720961aa9452, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -934,10 +930,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1970727500023715476, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
-      propertyPath: m_TargetGraphic
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2753813280673306780, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -998,7 +990,8 @@ PrefabInstance:
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 304597471421528981, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using BehaviourTreeColin;
+using UnityEngine.UI;
 
 public class Boss1Controller : MonoBehaviour
 {
@@ -20,7 +20,7 @@ public class Boss1Controller : MonoBehaviour
     [SerializeField] float maxCubeSpawnRadius;
     [Header("Health")]
     [SerializeField] int maxHealth = 100;
-    [SerializeField] SmoothHealthBar healthBar;
+    [SerializeField] Slider healthBar;
     int health;
     [Header("Movement")]
     public float rotationSpeed = 45f;
@@ -81,6 +81,9 @@ public class Boss1Controller : MonoBehaviour
 
     private void Update()
     {
+        //Fix some stuff
+
+
         //Cube spawning
         if (cubes.Count < targets.Length)
         {

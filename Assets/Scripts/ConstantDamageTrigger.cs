@@ -8,18 +8,6 @@ public class ConstantDamageTrigger : MonoBehaviour
     [SerializeField] int damagePerInterval;
 
     float timer;
-    Collider myCollider;
-    List<GameObject> overlappingObjects;
-
-    private void Awake()
-    {
-        myCollider = GetComponent<Collider>();
-    }
-
-    private void OnEnable()
-    {
-        overlappingObjects = new List<GameObject>();
-    }
 
     private void Update()
     {
@@ -27,24 +15,17 @@ public class ConstantDamageTrigger : MonoBehaviour
         if (timer > damageInterval)
         {
             timer -= damageInterval;
+
+            RaycastHit[] hits = Physics.SphereCastAll(transform.parent.position, 0.75f, transform.parent.forward, 200);
             
-            foreach (GameObject obj in overlappingObjects)
+            foreach (RaycastHit hit in hits)
             {
-                if (obj == null || obj.GetComponent<DamageableComponent>() == null)
+               if (hit.collider.GetComponent<DamageableComponent>() == null)
                     continue;
 
-                obj.GetComponent<DamageableComponent>().TakeDamage(damagePerInterval);
+                Debug.Log($"Take damage {hit.collider.gameObject.name}!");
+                hit.collider.GetComponent<DamageableComponent>().TakeDamage(damagePerInterval);
             }
         }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        overlappingObjects.Add(other.gameObject);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        overlappingObjects.Remove(other.gameObject);
     }
 }

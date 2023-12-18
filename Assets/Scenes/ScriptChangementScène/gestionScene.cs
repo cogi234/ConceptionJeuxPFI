@@ -5,12 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class gestionScene : MonoBehaviour , Idatapersistant
 {
-    public void LoadSceneP1()
-    {
-        SceneManager.LoadScene(1);
-    }
+        
     public void charger(SceneStat data)
     {
+        Debug.Log("charge scene");
         int scene = data.Scene;
 
         SceneManager.LoadScene(scene);

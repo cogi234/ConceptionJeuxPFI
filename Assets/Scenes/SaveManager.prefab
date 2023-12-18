@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1776208436602445558}
   - component: {fileID: 8745629432491434343}
+  - component: {fileID: 691920980561882303}
   m_Layer: 0
   m_Name: SaveManager
   m_TagString: Untagged
@@ -50,3 +51,15 @@ MonoBehaviour:
     VieJoueur: 5
     "Cin\xE9matiqueenCour": 1
     PositionJoueur: {x: 0, y: 0, z: 0}
+--- !u!114 &691920980561882303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9039090229030477861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d50f0a270090e444f97c2caf5cc11e18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

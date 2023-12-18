@@ -81,9 +81,6 @@ public class Boss1Controller : MonoBehaviour
 
     private void Update()
     {
-        //Fix some stuff
-
-
         //Cube spawning
         if (cubes.Count < targets.Length)
         {
@@ -104,6 +101,13 @@ public class Boss1Controller : MonoBehaviour
         data["playerDistance"] = Vector3.Distance(transform.position, player.position);
         if (processBrain)
             behaviourTree.Evaluate(data);
+    }
+
+    private void LateUpdate()
+    {
+        //Fix position/rotation fuckery
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 
     public void StartFight()

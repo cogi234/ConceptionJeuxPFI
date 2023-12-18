@@ -9,7 +9,7 @@ namespace BehaviourTreeColin
     {
         float rotationSpeed, rotationMargin, shotDuration;
         Vector2 minRotation, maxRotation;
-        bool shooting = false;
+        bool shooting = false, started = false;
         Vector2 currentRotation = Vector2.zero;
 
         float shotTimer = 0;
@@ -25,14 +25,15 @@ namespace BehaviourTreeColin
 
         public override NodeState Evaluate(Dictionary<string, object> data)
         {
-            Vector2 targetRotation = Vector2.zero;
-
-            if ((bool)data["canShoot"] && !(bool)data["playerOnBoss"])
+            if (!started)
             {
-                targetRotation.x = Mathf.Rad2Deg * -Mathf.Asin((((Transform)data["playerTransform"]).position - ((Transform)data["coreTarget"]).position).normalized.y);
-                targetRotation.y = Mathf.Rad2Deg * Mathf.Asin((((Transform)data["bossTransform"]).worldToLocalMatrix * ((Transform)data["playerTransform"]).position).normalized.x);
+                data["currentAttack"] = $"LaserShot";
+                started = true;
             }
 
+            Vector2 targetRotation = Vector2.zero;
+            targetRotation.x = Mathf.Rad2Deg * -Mathf.Asin((((Transform)data["playerTransform"]).position - ((Transform)data["coreTarget"]).position).normalized.y);
+            targetRotation.y = Mathf.Rad2Deg * Mathf.Asin((((Transform)data["bossTransform"]).worldToLocalMatrix * ((Transform)data["playerTransform"]).position).normalized.x);
 
             if (shooting)
             {
@@ -40,6 +41,9 @@ namespace BehaviourTreeColin
                 if (shotTimer >= shotDuration)
                 {
                     shooting = false;
+                    started = false;
+                    data["currentAttack"] = "";
+                    data["attackCooldown"] = 10f;
                     shotTimer = 0;
                     ((Transform)data["coreTarget"]).GetChild(1).gameObject.SetActive(false);
                     return NodeState.Success;

@@ -425,7 +425,7 @@ MonoBehaviour:
   inputAsset: {fileID: -944628639613478452, guid: a9b19c5cf2ec1e94db2725813ca95be0, type: 3}
   groundAcceleration: 30
   airAcceleration: 5
-  maxSpeed: 4
+  maxSpeed: 5
   sprintMultiplier: 1.75
   groundStopDamping: 10
   groundStopTreshold: 0.05
@@ -958,7 +958,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 67050383623484315, guid: c15c1d4c19208e64b86eb349a2a8a889, type: 3}
       propertyPath: m_VersionIndex
-      value: 761
+      value: 764
       objectReference: {fileID: 0}
     - target: {fileID: 188198344148339032, guid: c15c1d4c19208e64b86eb349a2a8a889, type: 3}
       propertyPath: m_Name
@@ -982,7 +982,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2943122085860149185, guid: c15c1d4c19208e64b86eb349a2a8a889, type: 3}
       propertyPath: m_VersionIndex
-      value: 1838
+      value: 1841
       objectReference: {fileID: 0}
     - target: {fileID: 4888353810720407481, guid: c15c1d4c19208e64b86eb349a2a8a889, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1030,7 +1030,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8245006527254553426, guid: c15c1d4c19208e64b86eb349a2a8a889, type: 3}
       propertyPath: m_VersionIndex
-      value: 1525
+      value: 1528
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

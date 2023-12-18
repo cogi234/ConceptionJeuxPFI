@@ -20,29 +20,8 @@ namespace BehaviourTreeColin
             //Aim for the player
             Vector3 directionToPlayer = ((Transform)data["playerTransform"]).position - ((Transform)data["bossTransform"]).position;
             Vector3 newDirection = Vector3.RotateTowards(((Transform)data["bossTransform"]).forward, directionToPlayer, ((Boss1Controller)data["bossController"]).rotationSpeed * Time.deltaTime, 0);
-            ((Transform)data["bossTransform"]).rotation = Quaternion.LookRotation(newDirection);
-            /*
-            float targetRotation = Mathf.Rad2Deg * Mathf.Asin(((Transform)data["bossTransform"]).InverseTransformPoint(((Transform)data["playerTransform"]).position).normalized.x);
-            float currentRotation = ((Transform)data["bossTransform"]).rotation.eulerAngles.y;
-            float rotationDifference;
+            ((Transform)data["bossTransform"]).rotation = Quaternion.LookRotation(newDirection, Vector3.up);
 
-            float y1 = currentRotation % 360, y2 = targetRotation % 360;
-            if (Mathf.Abs(y2 - y1) < Mathf.Abs(y2 - y1 + 360) && Mathf.Abs(y2 - y1) < Mathf.Abs(y2 - y1 - 360))
-                rotationDifference = y2 - y1;
-            else if (Mathf.Abs(y2 - y1 + 360) < Mathf.Abs(y2 - y1 - 360))
-                rotationDifference = y2 - y1 + 360;
-            else
-                rotationDifference = y2 - y1 - 360;
-
-            float rotationToDo;
-
-            if (rotationDifference < 0)
-                rotationToDo = Mathf.Max(-((Boss1Controller)data["bossController"]).rotationSpeed * Time.deltaTime, rotationDifference);
-            else
-                rotationToDo = Mathf.Min(((Boss1Controller)data["bossController"]).rotationSpeed * Time.deltaTime, rotationDifference);
-            
-            ((Transform)data["bossTransform"]).Rotate(new Vector3(0, rotationToDo, 0));
-            */
             //Advance if not in ideal range
             float distance = Vector3.Distance(((Transform)data["playerTransform"]).position, ((Transform)data["bossTransform"]).position);
 

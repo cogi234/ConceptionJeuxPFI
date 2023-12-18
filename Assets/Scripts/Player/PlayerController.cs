@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour ,Idatapersistant
+public class PlayerController : MonoBehaviour, Idatapersistant
 {
     [SerializeField] InputActionAsset inputAsset;
     [Header("Movement")]
@@ -77,7 +77,6 @@ public class PlayerController : MonoBehaviour ,Idatapersistant
 
     private void FixedUpdate()
     {
-        Debug.Log(gameObject.transform.position);
         //Detect groundedness
         bool wasGrounded = Grounded;
         Grounded = Physics.SphereCast(new Ray(transform.position + groundedRaycastOrigin, Vector3.down), 0.475f, groundedRaycastLength, groundedRaycastLayers);
@@ -130,7 +129,7 @@ public class PlayerController : MonoBehaviour ,Idatapersistant
         //TODO
     }
 
-    
+
 
     public void charger(SceneStat data)
     {
@@ -140,10 +139,11 @@ public class PlayerController : MonoBehaviour ,Idatapersistant
             gameObject.transform.position = data.PositionJoueur;
         }
     }
-    public void sauvegarde(ref SceneStat data) {
+    public void sauvegarde(ref SceneStat data)
+    {
         Debug.Log(gameObject.transform.position);
         data.VieJoueur = health;
         data.PositionJoueur = gameObject.transform.position;
-        
-            }
+
+    }
 }

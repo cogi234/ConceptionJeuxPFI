@@ -120,7 +120,7 @@ public class Boss1Controller : MonoBehaviour
         //We enable taking damage
         core.GetComponent<DamageableComponent>().enabled = true;
         yield return new WaitForSeconds(6);
-        //processBrain = true;
+        processBrain = true;
     }
 
     private void CreateBody()

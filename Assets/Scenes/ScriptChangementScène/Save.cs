@@ -33,15 +33,13 @@ public class Save : MonoBehaviour
         }
 
         string dir = Application.persistentDataPath + "/Saves";
+        Debug.Log(dir);
         if (!Directory.Exists(dir))
         {
             Directory.CreateDirectory(dir);
 
         }
-        else
-        {
-            Debug.Log("sauvegarde vide création de sauvegarde");
-        }
+       
 
         string json = JsonUtility.ToJson(state);
         File.WriteAllText(dir + "/save1.txt", json);
@@ -49,7 +47,7 @@ public class Save : MonoBehaviour
     }
     public void charger()
     {
-
+        idataPersistantObjec = ChercherDataPersistant();
 
         string savePath = Application.persistentDataPath + "/Saves/save1.txt";
         if (File.Exists(savePath))
@@ -59,9 +57,10 @@ public class Save : MonoBehaviour
         }
         else
         {
+            Debug.Log("passe nouveau stat");
             state = new SceneStat();
         }
-
+       
         foreach (Idatapersistant objectPersitant in idataPersistantObjec)
         {
             objectPersitant.charger(state);
@@ -77,13 +76,23 @@ public class Save : MonoBehaviour
     {
 
 
-       
-            state = new SceneStat();
         
+           state = new SceneStat();
 
+        string dir = Application.persistentDataPath + "/Saves";
+        Debug.Log(dir);
+        if (!Directory.Exists(dir))
+        {
+            Directory.CreateDirectory(dir);
+
+        }
+
+
+        string json = JsonUtility.ToJson(state);
+        File.WriteAllText(dir + "/save1.txt", json);
         foreach (Idatapersistant objectPersitant in idataPersistantObjec)
         {
-            objectPersitant.charger(state);
+           objectPersitant.charger(state);
         }
 
 

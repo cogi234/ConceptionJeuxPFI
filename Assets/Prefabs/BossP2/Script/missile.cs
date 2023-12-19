@@ -14,7 +14,8 @@ public class missile : MonoBehaviour
     float compteur=0;
     private Vector3 directionNormalize;
     private Vector3 _direction;
-    [SerializeField] float speed =100.0f;
+    //
+    float speed =100.0f;
     bool AltiduteAtteint = false;
 
     void Update()

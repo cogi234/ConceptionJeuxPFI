@@ -41,6 +41,7 @@ public class Entrerp2 : MonoBehaviour
         }
 
         cinematique.cinematique = true;
+        GameObject.Find("Player").GetComponent<PlayerController>().immobile = true;
     }
 
     bool Tp = true;
@@ -224,6 +225,7 @@ public class Entrerp2 : MonoBehaviour
         else
         {
             cinematique.cinematique = false;
+            GameObject.Find("Player").GetComponent<PlayerController>().immobile = false;
         }
 
     }

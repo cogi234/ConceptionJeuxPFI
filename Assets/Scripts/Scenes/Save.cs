@@ -94,11 +94,6 @@ public class Save : MonoBehaviour
         {
            objectPersitant.charger(state);
         }
-
-
-
-
-
     }
 
     public List<Idatapersistant> ChercherDataPersistant()

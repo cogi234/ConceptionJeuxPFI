@@ -27,7 +27,7 @@ public class BlocDownfall : MonoBehaviour
             if (transform.position.y< initial.y) {
                 transform.position = initial;
                 Tombers = !Tombers;
-                audio = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>();
+                audio = GameObject.Find("StompSound").GetComponent<AudioSource>();
                 audio.Play();
             }
         }

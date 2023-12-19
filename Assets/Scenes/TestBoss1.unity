@@ -914,18 +914,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6361140887833155426, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6526304028852259212, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1077741472}
-    - target: {fileID: 8868160736568350864, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9105075800246197071, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

@@ -221,7 +221,7 @@ public class Boss1Controller : MonoBehaviour
         core.GetComponent<CoreMovement>().currentAction = CoreMovement.CoreAction.Nothing;
         core.GetComponent<DamageableComponent>().enabled = false;
 
-        GameObject.Find("FadeToBlack").GetComponent<FadeToBlack>().enabled = true;
+        //GameObject.Find("FadeToBlack").SetActive(true);
 
         //Destroy(gameObject);
 
@@ -230,6 +230,6 @@ public class Boss1Controller : MonoBehaviour
         //Ici, on load la scene du boss 2
         GameObject.Find("SaveManager").GetComponent<Save>().scene1a2();
 
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
     }
 }

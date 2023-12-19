@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour, Idatapersistant
         health = Mathf.Max(health, 0);
         healthBar.value = health;
 
-        if (health <= 0 && deathCoroutine != null)
+        if (health <= 0 && deathCoroutine == null)
             StartCoroutine(OnDeath());
     }
 

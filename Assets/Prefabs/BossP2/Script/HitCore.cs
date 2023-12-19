@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HitCore : MonoBehaviour
 {
@@ -8,21 +9,19 @@ public class HitCore : MonoBehaviour
     [SerializeField]int Pv = 2;
     [SerializeField] Transform positionTp;
     GameObject joueur;
-    // Start is called before the first frame update
+
     void Start()
     {
         joueur = GameObject.FindGameObjectWithTag("Player");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         Pv --;
+
+        if (Pv <= 0)
+            StartCoroutine(Death());
+
         Tp();
     }
     public void Tp()
@@ -36,11 +35,17 @@ public class HitCore : MonoBehaviour
     }
     public void sauvegarde(ref SceneStat data)
     {
-  
         data.VieBoss = Pv;
-       
-
     }
 
+    IEnumerator Death()
+    {
+        GameObject.Find("FadeToBlack").GetComponent<FadeToBlack>().enabled = true;
 
+        yield return new WaitForSeconds(5);
+
+        //Ici, on load la scene du boss 2
+
+        SceneManager.LoadScene(3);
+    }
 }

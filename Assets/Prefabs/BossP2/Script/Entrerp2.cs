@@ -36,8 +36,8 @@ public class Entrerp2 : MonoBehaviour
         {
             cameras.Add(go.GetComponent<Camera>());
         }
-        cameras[1].enabled = false;
-        cameras[0].enabled = true;
+        cameras[1].enabled = true;
+        cameras[0].enabled = false;
         spawner = GameObject.FindGameObjectWithTag("spawner").GetComponent<SpawnerEnnemi>();
         spawner.cinématique = true;
         Boss = GameObject.FindGameObjectWithTag("BossP2");
@@ -244,8 +244,8 @@ public class Entrerp2 : MonoBehaviour
             cinematique.cinematique = false;
             GameObject.Find("Player").GetComponent<PlayerController>().immobile = false;
             spawner.cinématique = false;
-            cameras[1].enabled = true ;
-            cameras[0].enabled = false;
+            cameras[1].enabled = false;
+            cameras[0].enabled = true;
             UiCanvas.SetActive(true);
         }
 

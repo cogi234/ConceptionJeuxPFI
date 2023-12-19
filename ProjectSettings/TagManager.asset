@@ -12,6 +12,7 @@ TagManager:
   - tireChoc
   - tireMillieu
   - Tp
+  - sword
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - AttaqueBmissile
   - AttaqueBshokwave
   - BossCubes
-  - 
+  - boss
   - 
   - 
   - 

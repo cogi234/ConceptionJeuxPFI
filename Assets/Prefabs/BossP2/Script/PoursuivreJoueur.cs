@@ -28,4 +28,18 @@ public class PoursuivreJoueur : MonoBehaviour
     {
         activer = true;
     }
+
+
+    public void TakeDamage(int dommage)
+    {
+        gameObject.SetActive(false);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        //if(other.tag == "sword")
+        //{
+            gameObject.SetActive(false);
+       // }
+    }
+
 }

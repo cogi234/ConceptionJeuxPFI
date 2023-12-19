@@ -10,19 +10,24 @@ public class SpawnerEnnemi : MonoBehaviour
     [SerializeField] GameObject Player;
     [SerializeField] float delay = 5;
     int compteurEnnemie=0;
-  
+   public bool cinématique = false;
     NavMeshAgent navMeshAgent;
   
 
    
     void Update()
     {
-        if (delay <= 0)
+        if (cinématique)
         {
-            SpawnEnnemy();
-            
+
+
+            if (delay <= 0)
+            {
+                SpawnEnnemy();
+
+            }
+            delay -= Time.deltaTime;
         }
-        delay -= Time.deltaTime;
 
     }
     void SpawnEnnemy()

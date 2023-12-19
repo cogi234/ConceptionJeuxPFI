@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour, Idatapersistant
     [Header("Health")]
     [SerializeField] int maxHealth = 5;
     [SerializeField] Slider healthBar;
-    int health;
+    float health;
     [Header("Stab")]
     [SerializeField] float stabRange = 1;
 
@@ -192,16 +192,16 @@ public class PlayerController : MonoBehaviour, Idatapersistant
     public void charger(SceneStat data)
     {
         health = data.VieJoueur;
-        if (data.PositionJoueur != null)
-        {
+        healthBar.value = health;
+        
             gameObject.transform.position = data.PositionJoueur;
-        }
+        
     }
     public void sauvegarde(ref SceneStat data)
     {
         Debug.Log(health);
         data.VieJoueur = health;
         data.PositionJoueur = gameObject.transform.position;
-
+       
     }
 }

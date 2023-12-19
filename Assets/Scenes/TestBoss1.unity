@@ -870,26 +870,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 349987295}
-    - target: {fileID: 3795253292433618339, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3795253292433618339, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3795253292433618339, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3795253292433618339, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3795253292433618339, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6103946094292469845, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -938,10 +918,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1077741472}
-    - target: {fileID: 8868160736568350864, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9105075800246197071, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

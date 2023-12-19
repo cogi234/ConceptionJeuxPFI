@@ -9,7 +9,7 @@ public class ConstantDamageTrigger : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.GetComponent<DamageableComponent>() != null && other.gameObject.name != "Core")
+        if (other.gameObject.name == "Player")
         {
             other.GetComponent<DamageableComponent>().TakeDamage(damage);
         }

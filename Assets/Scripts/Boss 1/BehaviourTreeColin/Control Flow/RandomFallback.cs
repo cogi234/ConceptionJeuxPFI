@@ -37,7 +37,6 @@ namespace BehaviourTreeColin
 
         private void ShuffleChildren()
         {
-            Debug.Log("Shuffled");
             List<Node> newChildren = new List<Node>();
 
             while (children.Count > 0)

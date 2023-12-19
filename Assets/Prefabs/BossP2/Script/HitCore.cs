@@ -28,5 +28,17 @@ public class HitCore : MonoBehaviour
     {
         
     }
+    public void charger(SceneStat data)
+    {
+        Pv = data.VieBoss;
+       
+    }
+    public void sauvegarde(ref SceneStat data)
+    {
+  
+        data.VieBoss = Pv;
+       
+
+    }
 
 }

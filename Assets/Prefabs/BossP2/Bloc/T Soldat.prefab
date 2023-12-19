@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5544748725972771935}
-  - component: {fileID: 7368871991383267696}
   - component: {fileID: 3406312079441607204}
+  - component: {fileID: 901991272630101404}
   m_Layer: 0
   m_Name: T Soldat
   m_TagString: Untagged
@@ -38,19 +38,6 @@ Transform:
   - {fileID: 4467974324857257925}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7368871991383267696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3957654362270690736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eda959f89b9cb3b4e928c579ca999ff0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HauteurChute: 40
 --- !u!195 &3406312079441607204
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -70,9 +57,21 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 1.7
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &901991272630101404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3957654362270690736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60cc66d138f5e544f8152cde38b310a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1168588838472179413
 PrefabInstance:
   m_ObjectHideFlags: 0

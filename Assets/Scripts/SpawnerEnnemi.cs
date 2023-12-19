@@ -17,7 +17,7 @@ public class SpawnerEnnemi : MonoBehaviour
    
     void Update()
     {
-        if (cinématique)
+        if (!cinématique)
         {
 
 

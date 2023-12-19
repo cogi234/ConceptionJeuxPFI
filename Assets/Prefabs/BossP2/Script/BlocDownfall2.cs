@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BlocDownfall2 : MonoBehaviour
 {
-    [SerializeField] float HauteurChute = 40f;
+    [SerializeField] float HauteurChutee = 100f;
     Vector3 initial;
     float speed;
     bool Tombers = false;
@@ -40,6 +40,6 @@ public class BlocDownfall2 : MonoBehaviour
     public void tp()
     {
 
-        gameObject.transform.position = new Vector3(transform.position.x, transform.position.y + HauteurChute, transform.position.z);
+        gameObject.transform.position = new Vector3(transform.position.x, transform.position.y + HauteurChutee, transform.position.z);
     }
 }

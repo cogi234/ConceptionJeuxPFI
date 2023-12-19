@@ -61,28 +61,12 @@ public class PlayerController : MonoBehaviour, Idatapersistant
         playerInput.FindAction("Move").performed += MoveCall;
         playerInput.FindAction("Move").canceled += MoveCall;
         playerInput.FindAction("Look").performed += LookCall;
-        playerInput.FindAction("Attack").performed += (InputAction.CallbackContext action) => {
-            if (immobile)
-                return;
-            animator.SetTrigger("Swing");
-        };
-        playerInput.FindAction("Jump").performed += (InputAction.CallbackContext action) => {
-            if (immobile)
-                return;
-            jumping = true;
-        };
-        playerInput.FindAction("Jump").canceled += (InputAction.CallbackContext action) => {
-            if (immobile)
-                return;
-            jumping = false;
-        };
+        playerInput.FindAction("Attack").performed += AttackCall;
+        playerInput.FindAction("Jump").performed += JumpCall;
+        playerInput.FindAction("Jump").canceled += JumpStop;
         playerInput.FindAction("Stab").performed += StabCall;
         playerInput.FindAction("Stab").canceled += StabStop;
-        playerInput.FindAction("Sprint").performed += (InputAction.CallbackContext action) => {
-            if (immobile)
-                return;
-            sprinting = true;
-        };
+        playerInput.FindAction("Sprint").performed += SprintCall;
     }
 
     private void OnDestroy()
@@ -91,30 +75,39 @@ public class PlayerController : MonoBehaviour, Idatapersistant
         playerInput.FindAction("Move").performed -= MoveCall;
         playerInput.FindAction("Move").canceled -= MoveCall;
         playerInput.FindAction("Look").performed -= LookCall;
-        playerInput.FindAction("Attack").performed -= (InputAction.CallbackContext action) => {
-            if (immobile)
-                return;
-            animator.SetTrigger("Swing"); 
-        };
-        playerInput.FindAction("Jump").performed -= (InputAction.CallbackContext action) => {
-            if (immobile)
-                return;
-            jumping = true; 
-        };
-        playerInput.FindAction("Jump").canceled -= (InputAction.CallbackContext action) => {
-            if (immobile)
-                return;
-            jumping = false; 
-        };
+        playerInput.FindAction("Attack").performed -= AttackCall;
+        playerInput.FindAction("Jump").performed -= JumpCall;
+        playerInput.FindAction("Jump").canceled -= JumpStop;
         playerInput.FindAction("Stab").performed -= StabCall;
         playerInput.FindAction("Stab").canceled -= StabStop;
-        playerInput.FindAction("Sprint").performed -= (InputAction.CallbackContext action) => {
-            if (immobile)
-                return;
-            sprinting = true;
-        };
+        playerInput.FindAction("Sprint").performed -= SprintCall;
     }
 
+
+    private void SprintCall(InputAction.CallbackContext action)
+    {
+        if (immobile)
+            return;
+        sprinting = true;
+    }
+    private void JumpCall(InputAction.CallbackContext action)
+    {
+        if (immobile)
+            return;
+        jumping = true;
+    }
+    private void JumpStop(InputAction.CallbackContext action)
+    {
+        if (immobile)
+            return;
+        jumping = false;
+    }
+    private void AttackCall(InputAction.CallbackContext action)
+    {
+        if (immobile)
+            return;
+        animator.SetTrigger("Swing");
+    }
     private void LookCall(InputAction.CallbackContext action)
     {
         if (immobile)

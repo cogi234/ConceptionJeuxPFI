@@ -61,24 +61,24 @@ public class PlayerController : MonoBehaviour, Idatapersistant
         playerInput.FindAction("Move").performed += MoveCall;
         playerInput.FindAction("Move").canceled += MoveCall;
         playerInput.FindAction("Look").performed += LookCall;
-        playerInput.FindAction("Attack").performed -= (InputAction.CallbackContext action) => {
+        playerInput.FindAction("Attack").performed += (InputAction.CallbackContext action) => {
             if (immobile)
                 return;
             animator.SetTrigger("Swing");
         };
-        playerInput.FindAction("Jump").performed -= (InputAction.CallbackContext action) => {
+        playerInput.FindAction("Jump").performed += (InputAction.CallbackContext action) => {
             if (immobile)
                 return;
             jumping = true;
         };
-        playerInput.FindAction("Jump").canceled -= (InputAction.CallbackContext action) => {
+        playerInput.FindAction("Jump").canceled += (InputAction.CallbackContext action) => {
             if (immobile)
                 return;
             jumping = false;
         };
         playerInput.FindAction("Stab").performed += StabCall;
         playerInput.FindAction("Stab").canceled += StabStop;
-        playerInput.FindAction("Sprint").performed -= (InputAction.CallbackContext action) => {
+        playerInput.FindAction("Sprint").performed += (InputAction.CallbackContext action) => {
             if (immobile)
                 return;
             sprinting = true;

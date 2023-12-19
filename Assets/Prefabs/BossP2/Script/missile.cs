@@ -9,7 +9,6 @@ public class missile : MonoBehaviour
     Transform Altidute;
     Transform Joueur;
     Vector3 ancienPositionJoueur;
-    DamageableComponent hitPlayer;
     [SerializeField] int degat;
     [SerializeField] float tempsDeVie = 500;
     float compteur=0;
@@ -17,13 +16,7 @@ public class missile : MonoBehaviour
     private Vector3 _direction;
     [SerializeField] float speed =10.0f;
     bool AltiduteAtteint = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-       hitPlayer =  GameObject.FindGameObjectWithTag("Player").GetComponent<DamageableComponent>();
-    }
 
-    // Update is called once per frame
     void Update()
     {
         compteur -= Time.deltaTime;
@@ -72,9 +65,12 @@ public class missile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        hitPlayer.TakeDamage(degat);
-        compteur = 0;
-        gameObject.SetActive(false);
+        if (collision.gameObject.name == "Player")
+        {
+            collision.gameObject.GetComponent<DamageableComponent>().TakeDamage(degat);
+            compteur = 0;
+            gameObject.SetActive(false);
+        }
     }
 
 

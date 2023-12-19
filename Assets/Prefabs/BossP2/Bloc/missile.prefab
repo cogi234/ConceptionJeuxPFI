@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02deb625c59711c40b01653748394e64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  degat: 0
+  degat: 1
   tempsDeVie: 500
   speed: 10
 --- !u!65 &3778306183990672158

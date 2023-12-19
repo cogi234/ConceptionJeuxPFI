@@ -22,6 +22,9 @@ public class Entrerp2 : MonoBehaviour
     AudioSource audioSource;
     cinématique cinematique;
     int ListeRequis;
+
+    GameObject UiCanvas;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +45,8 @@ public class Entrerp2 : MonoBehaviour
 
         cinematique.cinematique = true;
         GameObject.Find("Player").GetComponent<PlayerController>().immobile = true;
+        UiCanvas = GameObject.Find("UI Canvas");
+        UiCanvas.SetActive(false);
     }
 
     bool Tp = true;
@@ -226,6 +231,7 @@ public class Entrerp2 : MonoBehaviour
         {
             cinematique.cinematique = false;
             GameObject.Find("Player").GetComponent<PlayerController>().immobile = false;
+            UiCanvas.SetActive(true);
         }
 
     }

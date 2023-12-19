@@ -213,8 +213,6 @@ public class PlayerController : MonoBehaviour, Idatapersistant
         SceneManager.LoadScene(0);
     }
 
-
-
     public void charger(SceneStat data)
     {
         health = data.VieJoueur;

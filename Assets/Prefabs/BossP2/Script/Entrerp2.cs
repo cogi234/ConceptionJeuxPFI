@@ -64,8 +64,9 @@ public class Entrerp2 : MonoBehaviour
     [SerializeField] float compteurAvantCri=0.5f;
     float compteurCri;
     bool triggerAnimation = true;
+  
 
-  [SerializeField]  float tempsAnimation = 3;
+  [SerializeField]  float tempsAnimation = 2;
     private void Update()
     {
 

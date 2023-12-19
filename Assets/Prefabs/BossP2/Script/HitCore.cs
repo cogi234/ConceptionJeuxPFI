@@ -6,11 +6,12 @@ public class HitCore : MonoBehaviour
 {
 
     [SerializeField]int Pv = 2;
-
+    [SerializeField] Transform positionTp;
+    GameObject joueur;
     // Start is called before the first frame update
     void Start()
     {
-        
+        joueur = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -21,12 +22,12 @@ public class HitCore : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Pv = 2;
+        Pv --;
         Tp();
     }
     public void Tp()
     {
-        
+        joueur.transform.position = positionTp.position;
     }
     public void charger(SceneStat data)
     {
@@ -40,5 +41,6 @@ public class HitCore : MonoBehaviour
        
 
     }
+
 
 }

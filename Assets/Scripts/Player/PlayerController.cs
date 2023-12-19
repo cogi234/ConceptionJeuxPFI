@@ -67,15 +67,26 @@ public class PlayerController : MonoBehaviour, Idatapersistant
         playerInput.FindAction("Sprint").performed += (InputAction.CallbackContext action) => sprinting = true;
     }
 
+    private void OnDestroy()
+    {
+        InputActionMap playerInput = inputAsset.FindActionMap("Player");
+        playerInput.FindAction("Move").performed -= MoveCall;
+        playerInput.FindAction("Move").canceled -= MoveCall;
+        playerInput.FindAction("Look").performed -= LookCall;
+        playerInput.FindAction("Attack").performed -= (InputAction.CallbackContext action) => animator.SetTrigger("Swing");
+        playerInput.FindAction("Jump").performed -= (InputAction.CallbackContext action) => jumping = true;
+        playerInput.FindAction("Jump").canceled -= (InputAction.CallbackContext action) => jumping = false;
+        playerInput.FindAction("Stab").performed -= StabCall;
+        playerInput.FindAction("Stab").canceled -= StabStop;
+        playerInput.FindAction("Sprint").performed -= (InputAction.CallbackContext action) => sprinting = true;
+    }
+
     private void LookCall(InputAction.CallbackContext action)
     {
-        if (GetComponent<FixedJoint>() == null) {
-
-            transform.Rotate(new Vector3(0, Time.deltaTime * mouseSensitivity * action.ReadValue<Vector2>().x));
-            //We put a limit, so we can't look at the world upside down
-            cameraAngle = Mathf.Clamp(cameraAngle - (Time.deltaTime * mouseSensitivity * action.ReadValue<Vector2>().y), -90, 90);
-            cameraTransform.localRotation = Quaternion.Euler(cameraAngle, 0, 0);
-        }
+        transform.Rotate(new Vector3(0, Time.deltaTime * mouseSensitivity * action.ReadValue<Vector2>().x));
+        //We put a limit, so we can't look at the world upside down
+        cameraAngle = Mathf.Clamp(cameraAngle - (Time.deltaTime * mouseSensitivity * action.ReadValue<Vector2>().y), -90, 90);
+        cameraTransform.localRotation = Quaternion.Euler(cameraAngle, 0, 0);
     }
     private void MoveCall(InputAction.CallbackContext action)
     {

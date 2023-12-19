@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UnityEngine;
 
 namespace BehaviourTreeColin
 {
     public class RandomFallback : ControlNode
     {
-        static Random rng = new Random();
+        static System.Random rng = new System.Random();
 
         public RandomFallback(params Node[] children) : base(children)
         {
@@ -19,7 +20,10 @@ namespace BehaviourTreeColin
             {
                 NodeState childState = child.Evaluate(data);
                 if (childState == NodeState.Running)
+                {
+                    ShuffleChildren();
                     return childState;
+                }
                 else if (childState == NodeState.Success)
                 {
                     ShuffleChildren();
@@ -33,6 +37,7 @@ namespace BehaviourTreeColin
 
         private void ShuffleChildren()
         {
+            Debug.Log("Shuffled");
             List<Node> newChildren = new List<Node>();
 
             while (children.Count > 0)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTreeColin;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Boss1Controller : MonoBehaviour
 {
@@ -227,6 +228,8 @@ public class Boss1Controller : MonoBehaviour
         yield return new WaitForSeconds(5);
 
         //Ici, on load la scene du boss 2
+        GameObject.Find("SaveManager").GetComponent<Save>().scene1a2();
 
+        SceneManager.LoadScene(3);
     }
 }

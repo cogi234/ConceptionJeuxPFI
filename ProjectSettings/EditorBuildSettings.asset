@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: ef8b5549cfdc9624989d469a38f28ee0
   - enabled: 1
-    path: Assets/Scenes/TestBoss1.unity
+    path: Assets/Scenes/BossFight1.unity
     guid: 39a60ab1788e1754dac41cf8ae472f65
   - enabled: 1
     path: Assets/Scenes/P2Fight.unity

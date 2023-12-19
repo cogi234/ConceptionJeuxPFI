@@ -13,6 +13,7 @@ TagManager:
   - tireMillieu
   - Tp
   - sword
+  - spawner
   layers:
   - Default
   - TransparentFX

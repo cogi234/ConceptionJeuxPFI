@@ -98,7 +98,7 @@ public class Save : MonoBehaviour
         state.VieJoueur = 5;
         state.VieBoss = 3;
         state.CinématiqueenCour = true;
-        state.PositionJoueur = new Vector3 (3.04f, 26.23f, 463.18f);
+        state.PositionJoueur = new Vector3 (-33.90511f, 5.388f, 472.459f);
 
         string dir = Application.persistentDataPath + "/Saves";
         Debug.Log(dir);

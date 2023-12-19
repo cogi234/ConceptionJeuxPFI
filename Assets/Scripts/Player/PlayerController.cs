@@ -194,7 +194,7 @@ public class PlayerController : MonoBehaviour, Idatapersistant
     }
     public void sauvegarde(ref SceneStat data)
     {
-        Debug.Log(gameObject.transform.position);
+        Debug.Log(health);
         data.VieJoueur = health;
         data.PositionJoueur = gameObject.transform.position;
 

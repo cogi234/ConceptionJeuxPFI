@@ -10,8 +10,11 @@ public class gestionScene : MonoBehaviour , Idatapersistant
     {
         Debug.Log("charge scene");
         int scene = data.Scene;
-
-        SceneManager.LoadScene(scene);
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            SceneManager.LoadScene(scene);
+        }
+      
     }
     public void sauvegarde(ref SceneStat data)
     {

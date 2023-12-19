@@ -24,7 +24,7 @@ public class BehaviourTreeCreator
         Node strikeLeft = new Strike("Left", -6.95f);
         Node strikeLCurrentAction = new DataCompare<string>(strikeLeft, "currentAttack", "StrikeLeft", DataCompare<string>.ComparisonType.Equal);
 
-        Node currentAttackSelector = new Fallback(laserSweepCurrentAction, shakeOffCurrentAction, jumpCurrentAction, strikeRCurrentAction, strikeLCurrentAction);
+        Node currentAttackSelector = new Fallback(laserShotCurrentAction, laserSweepCurrentAction, shakeOffCurrentAction, jumpCurrentAction, strikeRCurrentAction, strikeLCurrentAction);
 
         //Selecting the appropriate attack
         Node randomAttackOnBoss = new RandomFallback(shakeOff, laserSweep);

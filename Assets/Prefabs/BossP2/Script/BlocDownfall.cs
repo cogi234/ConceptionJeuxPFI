@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BlocDownfall : MonoBehaviour
 {
-    [SerializeField] float HauteurChute = 40f;
+    [SerializeField] float HauteurChutee = 100f;
     Vector3 initial;
     float speed;
     bool Tombers = false;
@@ -12,7 +12,7 @@ public class BlocDownfall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        audio =  GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>();
+        
         initial = new Vector3(transform.position.x,transform.position.y,transform.position.z);
     }
 
@@ -22,10 +22,12 @@ public class BlocDownfall : MonoBehaviour
 
         if (Tombers)
         {
+
             gameObject.transform.Translate(new Vector3(0,-1,0) * speed * Time.deltaTime, Space.World);
             if (transform.position.y< initial.y) {
                 transform.position = initial;
                 Tombers = !Tombers;
+                audio = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>();
                 audio.Play();
             }
         }
@@ -39,6 +41,6 @@ public class BlocDownfall : MonoBehaviour
     public void tp()
     {
 
-        gameObject.transform.position = new Vector3(transform.position.x, transform.position.y+HauteurChute, transform.position.z);
+        gameObject.transform.position = new Vector3(transform.position.x, transform.position.y+HauteurChutee, transform.position.z);
     }
 }

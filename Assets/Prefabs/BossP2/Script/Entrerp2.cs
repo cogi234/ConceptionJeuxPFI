@@ -11,7 +11,7 @@ using Anthony;
 public class Entrerp2 : MonoBehaviour
 {
     Random random = new Random();
- 
+
     GameObject Boss;
     List<BlocDownfall> BlocDownfallList = new List<BlocDownfall>();
     List<BlocDownfall2> BlocDownfallList2 = new List<BlocDownfall2>();
@@ -20,14 +20,26 @@ public class Entrerp2 : MonoBehaviour
     BlocDownfall2[] BlocDownfallListsTab2 = new BlocDownfall2[0];
     Animator animator;
     AudioSource audioSource;
-    cinématique cinematique;
+    cinï¿½matique cinematique;
+    SpawnerEnnemi spawner;
     int ListeRequis;
+    List<Camera> cameras = new List<Camera>();
 
     GameObject UiCanvas;
 
     // Start is called before the first frame update
     void Start()
     {
+        GameObject[] li;
+         li = GameObject.FindGameObjectsWithTag("MainCamera");
+        foreach (GameObject go in li)
+        {
+            cameras.Add(go.GetComponent<Camera>());
+        }
+        cameras[1].enabled = false;
+        cameras[0].enabled = true;
+        spawner = GameObject.FindGameObjectWithTag("spawner").GetComponent<SpawnerEnnemi>();
+        spawner.cinï¿½matique = true;
         Boss = GameObject.FindGameObjectWithTag("BossP2");
         animator= Boss.GetComponent<Animator>();
         audioSource = Boss.GetComponent<AudioSource>();
@@ -231,19 +243,22 @@ public class Entrerp2 : MonoBehaviour
         {
             cinematique.cinematique = false;
             GameObject.Find("Player").GetComponent<PlayerController>().immobile = false;
+            spawner.cinï¿½matique = false;
+            cameras[1].enabled = true ;
+            cameras[0].enabled = false;
             UiCanvas.SetActive(true);
         }
 
     }
     public void charger(SceneStat data)
     {
-        cinematique.cinematique = data.CinématiqueenCour;
+        cinematique.cinematique = data.Cinï¿½matiqueenCour;
 
     }
     public void sauvegarde(ref SceneStat data)
     {
 
-        data.CinématiqueenCour = cinematique.cinematique;
+        data.Cinï¿½matiqueenCour = cinematique.cinematique;
 
 
     }

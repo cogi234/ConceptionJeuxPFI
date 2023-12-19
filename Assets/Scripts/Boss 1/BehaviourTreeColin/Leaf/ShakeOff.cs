@@ -25,7 +25,7 @@ namespace BehaviourTreeColin
             {
                 data["currentAttack"] = "";
                 data["canShoot"] = true;
-                data["attackCooldown"] = 10f;
+                data["attackCooldown"] = 7f;
                 timer = 0f;
                 return NodeState.Success;
             }

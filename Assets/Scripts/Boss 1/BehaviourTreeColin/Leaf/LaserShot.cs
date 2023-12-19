@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace BehaviourTreeColin
 {
@@ -43,7 +42,7 @@ namespace BehaviourTreeColin
                     shooting = false;
                     started = false;
                     data["currentAttack"] = "";
-                    data["attackCooldown"] = 10f;
+                    data["attackCooldown"] = 7f;
                     shotTimer = 0;
                     ((Transform)data["coreTarget"]).GetChild(1).gameObject.SetActive(false);
                     return NodeState.Success;

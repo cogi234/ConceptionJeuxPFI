@@ -57,7 +57,7 @@ namespace BehaviourTreeColin
                 if (timer >= 10)
                 {
                     data["currentAttack"] = "";
-                    data["attackCooldown"] = 10f;
+                    data["attackCooldown"] = 7f;
                     timer = 0f;
                     started = false;
                     return NodeState.Success;

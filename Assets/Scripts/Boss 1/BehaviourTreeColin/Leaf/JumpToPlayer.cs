@@ -47,7 +47,7 @@ namespace BehaviourTreeColin
                     ((Transform)data["bossTransform"]).position = targetPosition;
                     data["currentAttack"] = "";
                     data["canShoot"] = true;
-                    data["attackCooldown"] = 10f + 0.75f;
+                    data["attackCooldown"] = 7f + 0.75f;
                     timer = 0f;
                     started = false;
                     return NodeState.Success;

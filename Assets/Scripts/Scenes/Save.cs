@@ -12,7 +12,6 @@ public class Save : MonoBehaviour
     public void debut()
     {
         charger();
-
     }
 
     private void Start()
@@ -21,8 +20,7 @@ public class Save : MonoBehaviour
     }
     public void nouvelSauvegarde()
     {
-
-      this.state= new SceneStat();
+        state= new SceneStat();
     }
 
     public void sauvegarde()
@@ -37,13 +35,10 @@ public class Save : MonoBehaviour
         if (!Directory.Exists(dir))
         {
             Directory.CreateDirectory(dir);
-
         }
-       
 
         string json = JsonUtility.ToJson(state);
         File.WriteAllText(dir + "/save1.txt", json);
-
     }
     public void charger()
     {
@@ -65,19 +60,11 @@ public class Save : MonoBehaviour
         {
             objectPersitant.charger(state);
         }
-
-
-
-
-
     }
 
     public void NouvellePartie()
     {
-
-
-        
-           state = new SceneStat();
+        state = new SceneStat();
 
         string dir = Application.persistentDataPath + "/Saves";
         Debug.Log(dir);
@@ -87,12 +74,11 @@ public class Save : MonoBehaviour
 
         }
 
-
         string json = JsonUtility.ToJson(state);
         File.WriteAllText(dir + "/save1.txt", json);
         foreach (Idatapersistant objectPersitant in idataPersistantObjec)
         {
-           objectPersitant.charger(state);
+            objectPersitant.charger(state);
         }
     }
 
@@ -109,27 +95,19 @@ public class Save : MonoBehaviour
     }
     public  void scene1a2()
     {
-
         state.VieJoueur = 5;
         state.VieBoss = 3;
         state.CinématiqueenCour = true;
         state.PositionJoueur = new Vector3 (3.04f, 26.23f, 463.18f);
-
 
         string dir = Application.persistentDataPath + "/Saves";
         Debug.Log(dir);
         if (!Directory.Exists(dir))
         {
             Directory.CreateDirectory(dir);
-
         }
-
 
         string json = JsonUtility.ToJson(state);
         File.WriteAllText(dir + "/save1.txt", json);
-        //
-
-
     }
-
 }

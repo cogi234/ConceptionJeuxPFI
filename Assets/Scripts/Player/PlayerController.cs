@@ -83,10 +83,13 @@ public class PlayerController : MonoBehaviour, Idatapersistant
 
     private void LookCall(InputAction.CallbackContext action)
     {
-        transform.Rotate(new Vector3(0, Time.deltaTime * mouseSensitivity * action.ReadValue<Vector2>().x));
-        //We put a limit, so we can't look at the world upside down
-        cameraAngle = Mathf.Clamp(cameraAngle - (Time.deltaTime * mouseSensitivity * action.ReadValue<Vector2>().y), -90, 90);
-        cameraTransform.localRotation = Quaternion.Euler(cameraAngle, 0, 0);
+        if (GetComponent<FixedJoint>() == null) {
+
+            transform.Rotate(new Vector3(0, Time.deltaTime * mouseSensitivity * action.ReadValue<Vector2>().x));
+            //We put a limit, so we can't look at the world upside down
+            cameraAngle = Mathf.Clamp(cameraAngle - (Time.deltaTime * mouseSensitivity * action.ReadValue<Vector2>().y), -90, 90);
+            cameraTransform.localRotation = Quaternion.Euler(cameraAngle, 0, 0);
+        }
     }
     private void MoveCall(InputAction.CallbackContext action)
     {

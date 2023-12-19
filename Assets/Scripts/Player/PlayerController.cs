@@ -208,6 +208,8 @@ public class PlayerController : MonoBehaviour, Idatapersistant
         yield return new WaitForSeconds(5);
 
         //Ici une fois mort, on restart du debut 
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene(0);
     }
 

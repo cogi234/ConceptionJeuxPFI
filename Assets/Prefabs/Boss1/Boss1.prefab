@@ -58,7 +58,7 @@ MonoBehaviour:
   maxHealth: 5
   healthBar: {fileID: 7355280995181393661}
   rotationSpeed: 0.2
-  movementSpeed: 0
+  movementSpeed: 5
   jumpMaxDistance: 40
   jumpMinDistance: 20
 --- !u!1 &2497394924606709189

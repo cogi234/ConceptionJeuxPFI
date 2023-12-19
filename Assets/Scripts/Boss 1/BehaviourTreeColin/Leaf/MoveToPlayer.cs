@@ -28,13 +28,13 @@ namespace BehaviourTreeColin
             if (advancing)
                 ((Transform)data["bossTransform"]).Translate(Vector3.forward * ((Boss1Controller)data["bossController"]).movementSpeed * Time.deltaTime, Space.Self);
 
-            if (!advancing && distance >= 20)
+            if (!advancing && distance >= 25)
             {
                 //Advance
-                ((Transform)data["body"]).GetComponent<Animator>().SetFloat("Speed", ((Boss1Controller)data["bossController"]).movementSpeed);
+                ((Transform)data["body"]).GetComponent<Animator>().SetFloat("Speed", 1);
                 advancing = true;
 
-            } else if (advancing && distance <= 5)
+            } else if (advancing && distance <= 10)
             {
                 ((Transform)data["body"]).GetComponent<Animator>().SetFloat("Speed", 0);
                 advancing = false;

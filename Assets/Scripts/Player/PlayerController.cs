@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, Idatapersistant
@@ -189,17 +190,15 @@ public class PlayerController : MonoBehaviour, Idatapersistant
         }
     }
 
+    Coroutine deathCoroutine;
     public void TakeDamage(int damage)
     {
-        if (health > 0)
-        {
-            health -= damage;
-            health = Mathf.Max(health, 0);
-            healthBar.value = health;
+        health -= damage;
+        health = Mathf.Max(health, 0);
+        healthBar.value = health;
 
-            if (health <= 0)
-                StartCoroutine(OnDeath());
-        }
+        if (health <= 0 && deathCoroutine != null)
+            StartCoroutine(OnDeath());
     }
 
     IEnumerator OnDeath()
@@ -209,7 +208,7 @@ public class PlayerController : MonoBehaviour, Idatapersistant
         yield return new WaitForSeconds(5);
 
         //Ici une fois mort, on restart du debut 
-        GameObject.Find("SaveManager").GetComponent<Save>().NouvellePartie();
+        SceneManager.LoadScene(0);
     }
 
 

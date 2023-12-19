@@ -71,7 +71,6 @@ public class Save : MonoBehaviour
         if (!Directory.Exists(dir))
         {
             Directory.CreateDirectory(dir);
-
         }
 
         string json = JsonUtility.ToJson(state);

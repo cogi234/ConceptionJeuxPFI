@@ -25,9 +25,9 @@ public class PlayerController : MonoBehaviour, Idatapersistant
     [SerializeField] float groundedRaycastLength;
     [SerializeField] LayerMask groundedRaycastLayers;
     [Header("Health")]
-    [SerializeField] float maxHealth = 5;
+    [SerializeField] int maxHealth = 5;
     [SerializeField] Slider healthBar;
-    float health;
+    int health;
     [Header("Stab")]
     [SerializeField] float stabRange = 1;
 

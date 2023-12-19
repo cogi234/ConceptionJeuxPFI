@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class HitCore : MonoBehaviour
 {
-
     [SerializeField]int Pv = 2;
     [SerializeField] Transform positionTp;
     GameObject joueur;
@@ -46,8 +45,7 @@ public class HitCore : MonoBehaviour
 
         yield return new WaitForSeconds(5);
 
-        //Ici, on load la scene du boss 2
-
+        //Ici, on load la scene de fin
         SceneManager.LoadScene(3);
     }
 }

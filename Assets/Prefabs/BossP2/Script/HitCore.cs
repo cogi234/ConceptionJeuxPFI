@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HitCore : MonoBehaviour
+public class HitCore : MonoBehaviour, Idatapersistant
 {
     [SerializeField]int Pv = 2;
     [SerializeField] Transform positionTp;

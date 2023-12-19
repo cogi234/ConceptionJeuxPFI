@@ -15,7 +15,7 @@ public class missile : MonoBehaviour
     private Vector3 directionNormalize;
     private Vector3 _direction;
     //
-    float speed =100.0f;
+    float speed =80.0f;
     bool AltiduteAtteint = false;
 
     void Update()

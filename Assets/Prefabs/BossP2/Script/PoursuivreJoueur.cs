@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,14 +18,14 @@ public class PoursuivreJoueur : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         GetComponent<DamageableComponent>().onDamage.AddListener(TakeDamage);
     }
-
+    bool mort = false;
     void Update()
     {
-        if (activer)
+        if (!mort)
         {
-            
+            agent.destination = player.transform.position;
         }
-        agent.destination = player.transform.position;
+       
     }
     public void destination()
     {
@@ -38,6 +39,7 @@ public class PoursuivreJoueur : MonoBehaviour
 
     IEnumerator Death()
     {
+        mort = true;
         GetComponent<AudioSource>().Play();
         agent.enabled = false;
         yield return new WaitForSeconds(2);

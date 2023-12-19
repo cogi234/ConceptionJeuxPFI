@@ -8,8 +8,9 @@ using Mathf = System.Math;
 using Unity.VisualScripting;
 using Anthony;
 
-public class Entrerp2 : MonoBehaviour
+public class Entrerp2 : MonoBehaviour, Idatapersistant
 {
+    bool cinema = false;
     Random random = new Random();
 
     GameObject Boss;
@@ -88,177 +89,190 @@ public class Entrerp2 : MonoBehaviour
     private void Update()
     {
 
-       
-        if (!finDeEntrer)
+        if (cinema)
         {
-            
-        
-
-         if (Tp)
-         {
-
-            foreach (BlocDownfall t in BlocDownfallList)
+            if (!finDeEntrer)
             {
-                t.tp();
-            }
-            foreach (BlocDownfall2 t in BlocDownfallList2)
-            {
-                t.tp();
-            }
-            Tp = false;
-         }
-          if (BlocDownfallList.Count != 0)
-         {
 
 
-            if (ConteurBPM >= BPM)
-            {
-                for (int i = 0; i < blocParBPM && BlocDownfallList.Count != 0; i++)
+
+                if (Tp)
                 {
 
-                    pointeur = random.Next(0, BlocDownfallList.Count);
-
-                    BlocDownfallList[pointeur].Tomber(vitesseBPM);
-                    BlocDownfallList.Remove(BlocDownfallList[pointeur]);
-                    ConteurBPM = 0;
-
-
-                }
-                if (vitesseBPM + 2 < 130)
-                {
-                    vitesseBPM += 2;
-                }
-               
-
-                if (BPM - 0.02f > 0.2f)
-                {
-                    BPM -= 0.02f;
-                }
-                else
-                {
-                    if (compteurAugmentation > augmentationDuTauxNBDrop)
+                    foreach (BlocDownfall t in BlocDownfallList)
                     {
-                        blocParBPM += 1;
-                        compteurAugmentation = 0;
+                        t.tp();
+                    }
+                    foreach (BlocDownfall2 t in BlocDownfallList2)
+                    {
+                        t.tp();
+                    }
+                    Tp = false;
+                }
+                if (BlocDownfallList.Count != 0)
+                {
+
+
+                    if (ConteurBPM >= BPM)
+                    {
+                        for (int i = 0; i < blocParBPM && BlocDownfallList.Count != 0; i++)
+                        {
+
+                            pointeur = random.Next(0, BlocDownfallList.Count);
+
+                            BlocDownfallList[pointeur].Tomber(vitesseBPM);
+                            BlocDownfallList.Remove(BlocDownfallList[pointeur]);
+                            ConteurBPM = 0;
+
+
+                        }
+                        if (vitesseBPM + 2 < 130)
+                        {
+                            vitesseBPM += 2;
+                        }
+
+
+                        if (BPM - 0.02f > 0.2f)
+                        {
+                            BPM -= 0.02f;
+                        }
+                        else
+                        {
+                            if (compteurAugmentation > augmentationDuTauxNBDrop)
+                            {
+                                blocParBPM += 1;
+                                compteurAugmentation = 0;
+                            }
+                            else
+                            {
+                                compteurAugmentation++;
+                            }
+
+                        }
                     }
                     else
                     {
-                        compteurAugmentation++;
+
+                        ConteurBPM += Time.deltaTime;
+                    }
+                }
+                else if (BlocDownfallList2.Count != 0)
+                {
+                    if (reset)
+                    {
+                        reset = !reset;
+                        ConteurBPM = 0;
+                        BPM = 0.4f;
+                        blocParBPM = 5;
+                        vitesseBPM = 50;
+                    }
+                    if (ConteurBPM >= BPM)
+                    {
+                        for (int j = 0; j < blocParBPM && BlocDownfallList2.Count != 0; j++)
+                        {
+
+                            pointeur = random.Next(0, BlocDownfallList2.Count);
+
+                            BlocDownfallList2[pointeur].Tomber(vitesseBPM);
+                            BlocDownfallList2.Remove(BlocDownfallList2[pointeur]);
+                            ConteurBPM = 0;
+
+
+                        }
+                        if (vitesseBPM + 2 < 130)
+                        {
+                            vitesseBPM += 2;
+                        }
+
+                        if (BPM - 0.02f > 0.2f)
+                        {
+                            BPM -= 0.02f;
+                        }
+                        else
+                        {
+                            if (compteurAugmentation > augmentationDuTauxNBDrop)
+                            {
+                                blocParBPM += 1;
+                                compteurAugmentation = 0;
+                            }
+                            else
+                            {
+                                compteurAugmentation++;
+                            }
+
+                        }
+                    }
+                    else
+                    {
+
+                        ConteurBPM += Time.deltaTime;
                     }
 
+
+
+
                 }
+                if (BlocDownfallList2.Count == 0 && BlocDownfallList.Count == 0)
+                {
+                    if (tempsAnimation < 0)
+                    {
+
+
+                        if (triggerAnimation)
+                        {
+                            animator.SetTrigger("DebutCri");
+                        }
+                        if (compteurCri > compteurAvantCri)
+                        {
+                            audioSource.Play();
+                            finDeEntrer = true;
+                        }
+                        else
+                        {
+                            compteurCri += Time.deltaTime;
+                        }
+
+                    }
+                    else
+                    {
+                        tempsAnimation -= Time.deltaTime;
+                    }
+                }
+
             }
+            //apres la fin d'entrer
             else
             {
-
-                ConteurBPM += Time.deltaTime;
+                cinema = false;
+                cinematique.cinematique = false;
+                GameObject.Find("Player").GetComponent<PlayerController>().immobile = false;
+                spawner.cinématique = false;
+                cameras[1].enabled = false;
+                cameras[0].enabled = true;
+                UiCanvas.SetActive(true);
             }
-              }
-         else if (BlocDownfallList2.Count != 0)
-          {
-            if (reset)
-            {
-                reset = !reset;
-                ConteurBPM = 0;
-                BPM = 0.4f;
-                blocParBPM= 5;
-                vitesseBPM = 50;
-            }
-            if (ConteurBPM >= BPM)
-            {
-                for (int j = 0; j < blocParBPM && BlocDownfallList2.Count != 0; j++)
-                {
-
-                    pointeur = random.Next(0, BlocDownfallList2.Count);
-
-                    BlocDownfallList2[pointeur].Tomber(vitesseBPM);
-                    BlocDownfallList2.Remove(BlocDownfallList2[pointeur]);
-                    ConteurBPM = 0;
-
-
-                }
-                if (vitesseBPM + 2 < 130)
-                {
-                    vitesseBPM += 2;
-                }
-
-                if (BPM - 0.02f > 0.2f)
-                {
-                    BPM -= 0.02f;
-                }
-                else
-                {
-                    if (compteurAugmentation > augmentationDuTauxNBDrop)
-                    {
-                        blocParBPM += 1;
-                        compteurAugmentation = 0;
-                    }
-                    else
-                    {
-                        compteurAugmentation++;
-                    }
-
-                }
-            }
-            else
-            {
-
-                ConteurBPM += Time.deltaTime;
-            }
-
-
-
-
-         }
-         if(BlocDownfallList2.Count == 0 && BlocDownfallList.Count == 0)
-         {
-                if (tempsAnimation<0)
-                {
-
-
-                    if (triggerAnimation)
-                    {
-                        animator.SetTrigger("DebutCri");
-                    }
-                    if (compteurCri > compteurAvantCri)
-                    {
-                        audioSource.Play();
-                        finDeEntrer = true;
-                    }
-                    else
-                    {
-                        compteurCri += Time.deltaTime;
-                    }
-
-                }
-                else
-                {
-                    tempsAnimation -= Time.deltaTime;
-                }
-          }
-
-        }
-        //apres la fin d'entrer
-        else
-        {
-            cinematique.cinematique = false;
-            GameObject.Find("Player").GetComponent<PlayerController>().immobile = false;
-            spawner.cinématique = false;
-            cameras[1].enabled = false;
-            cameras[0].enabled = true;
-            UiCanvas.SetActive(true);
         }
 
     }
     public void charger(SceneStat data)
     {
-        cinematique.cinematique = data.CinématiqueenCour;
+       cinema = data.CinématiqueenCour;
+        if (!cinema)
+        {
+            cameras[1].enabled = false;
+            cameras[0].enabled = true;
+            GameObject.Find("Player").GetComponent<PlayerController>().immobile = false;
+            spawner.cinématique = false;
+            UiCanvas.SetActive(true);
+            cinematique.cinematique = false;
+        }
 
     }
     public void sauvegarde(ref SceneStat data)
     {
 
-        data.CinématiqueenCour = cinematique.cinematique;
+        Debug.Log("la cinématique" + cinema);
+        data.CinématiqueenCour = cinema;
 
 
     }

@@ -8,19 +8,18 @@ public class Explosion : MonoBehaviour
 
     float lifetime = 4;
 
-    private void Awake()
+    private IEnumerator Start()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, force);
         foreach (Collider hit in hits)
         {
-            Rigidbody rb = hit.GetComponent<Rigidbody>();
-            if (rb != null)
-                rb.AddExplosionForce(force, transform.GetChild(0).position, radius, upModifier);
+            if (hit.attachedRigidbody != null)
+            {
+                hit.attachedRigidbody.AddExplosionForce(force, transform.position, radius, upModifier);
+                if (hit.GetComponent<PlayerController>() != null)
+                    hit.GetComponent<PlayerController>().ignoreGrounded = true;
+            }
         }
-    }
-
-    private IEnumerator Start()
-    {
         yield return new WaitForSeconds(lifetime);
         Destroy(gameObject);
     }

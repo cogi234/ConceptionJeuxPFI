@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyPrefab: {fileID: 921643320306437492, guid: 3076adcc48494b149827c56382583d8c, type: 3}
-  explosionRadius: 30
-  explosionForce: 10
-  explosionUpModifier: 1
+  explosionRadius: 50
+  explosionForce: 1000
+  explosionUpModifier: 3
   explosionPrefab: {fileID: 5523472808306560802, guid: 10430c874c6140d4392abb9e79c3eb2e, type: 3}
   coreTransitionTime: 3
   cubePrefab: {fileID: 7238438788582957988, guid: 034e60646a9512343ad6c2c6b357e53a, type: 3}
@@ -57,7 +57,7 @@ MonoBehaviour:
   maxCubeSpawnRadius: 20
   maxHealth: 5
   healthBar: {fileID: 7355280995181393661}
-  rotationSpeed: 0.5
+  rotationSpeed: 0.2
   movementSpeed: 0
   jumpMaxDistance: 40
   jumpMinDistance: 20

@@ -131,7 +131,7 @@ public class CoreMovement : MonoBehaviour
         if (transitionTimer >= transitionTime)
         {
             currentAction = CoreAction.GoToTarget;
-            GetComponent<Collider>().enabled = false;
+            GetComponent<Collider>().enabled = true;
             rb.isKinematic = false;
         }
     }

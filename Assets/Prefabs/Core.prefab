@@ -186,9 +186,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27ef72a3389f4b44095b4b85701d6df7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionForce: 10
+  explosionForce: 300
   explosionRadius: 30
-  explosionUpModifier: 1
+  explosionUpModifier: 2.5
   explosionPrefab: {fileID: 5523472808306560802, guid: 10430c874c6140d4392abb9e79c3eb2e, type: 3}
 --- !u!114 &2956998434057632992
 MonoBehaviour:
@@ -208,7 +208,7 @@ MonoBehaviour:
   onHeal:
     m_PersistentCalls:
       m_Calls: []
-  invincibilityTime: 0
+  invincibilityTime: 1
 --- !u!114 &6460613537106907867
 MonoBehaviour:
   m_ObjectHideFlags: 0

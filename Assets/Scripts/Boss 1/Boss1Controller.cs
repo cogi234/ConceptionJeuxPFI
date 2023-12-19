@@ -157,7 +157,7 @@ public class Boss1Controller : MonoBehaviour
             CubeController cube = inactiveCubes[inactiveCubes.Count - 1];
             cube.currentAction = CubeController.CubeAction.Transition;
             cube.transitionTime = cubeTransitionTime;
-            cube.target = targets[cubes.Count - 1];
+            cube.target = targets[cubes.Count];
 
             cubes.Add(cube);
         }
@@ -193,11 +193,11 @@ public class Boss1Controller : MonoBehaviour
             healthBar.value = health;
 
             if (health <= 0)
-                OnDeath();
+                StartCoroutine(OnDeath());
         }
     }
 
-    private void OnDeath()
+    private IEnumerator OnDeath()
     {
         processBrain = false;
         //Deactivate every cube
@@ -219,5 +219,14 @@ public class Boss1Controller : MonoBehaviour
         core.GetComponent<CoreMovement>().target = null;
         core.GetComponent<CoreMovement>().currentAction = CoreMovement.CoreAction.Nothing;
         core.GetComponent<DamageableComponent>().enabled = false;
+
+        Destroy(gameObject);
+
+        GameObject.Find("FadeToBlack").SetActive(true);
+
+        yield return new WaitForSeconds(5);
+
+        //Ici, on load la scene du boss 2
+
     }
 }

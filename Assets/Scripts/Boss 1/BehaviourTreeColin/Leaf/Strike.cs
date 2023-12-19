@@ -45,7 +45,7 @@ namespace BehaviourTreeColin
                 Vector3 newDirection = Vector3.RotateTowards(((Transform)data["bossTransform"]).forward, directionToPlayer, ((Boss1Controller)data["bossController"]).rotationSpeed * Time.deltaTime, 0);
                 ((Transform)data["bossTransform"]).rotation = Quaternion.LookRotation(newDirection, Vector3.up);
 
-                if (Vector3.Angle(((Transform)data["bossTransform"]).forward, directionToPlayer) < 1.5f)
+                if (Vector3.Angle(((Transform)data["bossTransform"]).forward, directionToPlayer) < 5f)
                 {
                     aiming = false;
                     ((Transform)data["body"]).GetComponent<Animator>().SetTrigger($"Strike {name}");
@@ -54,7 +54,7 @@ namespace BehaviourTreeColin
             {
                 timer += Time.deltaTime;
 
-                if (timer >= 7)
+                if (timer >= 10)
                 {
                     data["currentAttack"] = "";
                     data["attackCooldown"] = 10f;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, Idatapersistant
@@ -27,15 +28,19 @@ public class PlayerController : MonoBehaviour, Idatapersistant
     [SerializeField] float maxHealth = 5;
     [SerializeField] Slider healthBar;
     float health;
+    [Header("Stab")]
+    [SerializeField] float stabRange = 1;
 
     Rigidbody rb;
     Vector3 moveDirection;
     bool sprinting = false;
     bool jumping = false;
+    bool forceJump = false;
     float cameraAngle = 0;
     Animator animator;
 
     public bool Grounded { get; private set; }
+    public bool ignoreGrounded = false;
 
     private void Awake()
     {
@@ -57,6 +62,8 @@ public class PlayerController : MonoBehaviour, Idatapersistant
         playerInput.FindAction("Attack").performed += (InputAction.CallbackContext action) => animator.SetTrigger("Swing");
         playerInput.FindAction("Jump").performed += (InputAction.CallbackContext action) => jumping = true;
         playerInput.FindAction("Jump").canceled += (InputAction.CallbackContext action) => jumping = false;
+        playerInput.FindAction("Stab").performed += StabCall;
+        playerInput.FindAction("Stab").canceled += StabStop;
         playerInput.FindAction("Sprint").performed += (InputAction.CallbackContext action) => sprinting = true;
     }
 
@@ -74,14 +81,37 @@ public class PlayerController : MonoBehaviour, Idatapersistant
         if (moveDirection.z <= 0)
             sprinting = false;
     }
+    private void StabCall(InputAction.CallbackContext action)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, stabRange) && hit.rigidbody != null)
+        {
+            FixedJoint joint = gameObject.AddComponent<FixedJoint>();
+            joint.connectedBody = hit.rigidbody;
+            animator.SetBool("Stab", true);
+        }
+    }
+    private void StabStop(InputAction.CallbackContext action)
+    {
+        Destroy(GetComponent<FixedJoint>());
+        animator.SetBool("Stab", false);
+    }
 
     private void FixedUpdate()
     {
         //Detect groundedness
-        bool wasGrounded = Grounded;
-        Grounded = Physics.SphereCast(new Ray(transform.position + groundedRaycastOrigin, Vector3.down), 0.475f, groundedRaycastLength, groundedRaycastLayers);
-        if (Grounded && !wasGrounded)
-            jumping = false;
+        if (ignoreGrounded)
+        {
+            Grounded = false;
+            ignoreGrounded = false;
+        }
+        else
+        {
+            bool wasGrounded = Grounded;
+            Grounded = Physics.SphereCast(new Ray(transform.position + groundedRaycastOrigin, Vector3.down), 0.475f, groundedRaycastLength, groundedRaycastLayers);
+            if (Grounded && !wasGrounded)
+                jumping = false;
+        }
 
         if (Grounded)
             rb.maxLinearVelocity = maxSpeed * (sprinting ? sprintMultiplier : 1);
@@ -91,8 +121,17 @@ public class PlayerController : MonoBehaviour, Idatapersistant
         //Jump
         if (jumping)
         {
-            if (Grounded)
+            if (Grounded || forceJump)
+            {
                 rb.AddForce(Vector3.up * initialJumpForce, ForceMode.Impulse);
+                forceJump = false;
+            }
+            else if (GetComponent<FixedJoint>() != null)
+            {
+                Destroy(GetComponent<FixedJoint>());
+                animator.SetBool("Stab", false);
+                forceJump = true;
+            }
             else
                 rb.AddForce(Vector3.up * continuousJumpForce, ForceMode.Force);
         }

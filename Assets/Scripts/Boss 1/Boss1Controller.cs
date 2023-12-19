@@ -230,6 +230,6 @@ public class Boss1Controller : MonoBehaviour
         //Ici, on load la scene du boss 2
         GameObject.Find("SaveManager").GetComponent<Save>().scene1a2();
 
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(2);
     }
 }

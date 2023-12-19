@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour, Idatapersistant
 
     public bool Grounded { get; private set; }
     public bool ignoreGrounded = false;
+    public bool immobile = false;
 
     private void Awake()
     {
@@ -73,16 +74,34 @@ public class PlayerController : MonoBehaviour, Idatapersistant
         playerInput.FindAction("Move").performed -= MoveCall;
         playerInput.FindAction("Move").canceled -= MoveCall;
         playerInput.FindAction("Look").performed -= LookCall;
-        playerInput.FindAction("Attack").performed -= (InputAction.CallbackContext action) => animator.SetTrigger("Swing");
-        playerInput.FindAction("Jump").performed -= (InputAction.CallbackContext action) => jumping = true;
-        playerInput.FindAction("Jump").canceled -= (InputAction.CallbackContext action) => jumping = false;
+        playerInput.FindAction("Attack").performed -= (InputAction.CallbackContext action) => {
+            if (immobile)
+                return;
+            animator.SetTrigger("Swing"); 
+        };
+        playerInput.FindAction("Jump").performed -= (InputAction.CallbackContext action) => {
+            if (immobile)
+                return;
+            jumping = true; 
+        };
+        playerInput.FindAction("Jump").canceled -= (InputAction.CallbackContext action) => {
+            if (immobile)
+                return;
+            jumping = false; 
+        };
         playerInput.FindAction("Stab").performed -= StabCall;
         playerInput.FindAction("Stab").canceled -= StabStop;
-        playerInput.FindAction("Sprint").performed -= (InputAction.CallbackContext action) => sprinting = true;
+        playerInput.FindAction("Sprint").performed -= (InputAction.CallbackContext action) => {
+            if (immobile)
+                return;
+            sprinting = true;
+        };
     }
 
     private void LookCall(InputAction.CallbackContext action)
     {
+        if (immobile)
+            return;
         transform.Rotate(new Vector3(0, Time.deltaTime * mouseSensitivity * action.ReadValue<Vector2>().x));
         //We put a limit, so we can't look at the world upside down
         cameraAngle = Mathf.Clamp(cameraAngle - (Time.deltaTime * mouseSensitivity * action.ReadValue<Vector2>().y), -90, 90);
@@ -90,6 +109,8 @@ public class PlayerController : MonoBehaviour, Idatapersistant
     }
     private void MoveCall(InputAction.CallbackContext action)
     {
+        if (immobile)
+            return;
         Vector2 temp = action.ReadValue<Vector2>();
         moveDirection = new Vector3(temp.x, 0, temp.y);
         if (moveDirection.z <= 0)
@@ -97,6 +118,8 @@ public class PlayerController : MonoBehaviour, Idatapersistant
     }
     private void StabCall(InputAction.CallbackContext action)
     {
+        if (immobile)
+            return;
         RaycastHit hit;
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, stabRange) && hit.rigidbody != null)
         {
@@ -107,6 +130,8 @@ public class PlayerController : MonoBehaviour, Idatapersistant
     }
     private void StabStop(InputAction.CallbackContext action)
     {
+        if (immobile)
+            return;
         Destroy(GetComponent<FixedJoint>());
         animator.SetBool("Stab", false);
     }
@@ -193,15 +218,11 @@ public class PlayerController : MonoBehaviour, Idatapersistant
     {
         health = data.VieJoueur;
         healthBar.value = health;
-        
-            gameObject.transform.position = data.PositionJoueur;
-        
+        gameObject.transform.position = data.PositionJoueur;
     }
     public void sauvegarde(ref SceneStat data)
     {
-        Debug.Log(health);
         data.VieJoueur = health;
         data.PositionJoueur = gameObject.transform.position;
-       
     }
 }

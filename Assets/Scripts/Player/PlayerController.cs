@@ -136,6 +136,7 @@ public class PlayerController : MonoBehaviour, Idatapersistant
             FixedJoint joint = gameObject.AddComponent<FixedJoint>();
             joint.connectedBody = hit.rigidbody;
             animator.SetBool("Stab", true);
+            rb.constraints = RigidbodyConstraints.None;
         }
     }
     private void StabStop(InputAction.CallbackContext action)
@@ -144,6 +145,8 @@ public class PlayerController : MonoBehaviour, Idatapersistant
             return;
         Destroy(GetComponent<FixedJoint>());
         animator.SetBool("Stab", false);
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 
     private void FixedUpdate()
@@ -178,6 +181,8 @@ public class PlayerController : MonoBehaviour, Idatapersistant
             else if (GetComponent<FixedJoint>() != null)
             {
                 Destroy(GetComponent<FixedJoint>());
+                rb.constraints = RigidbodyConstraints.FreezeRotation;
+                transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
                 animator.SetBool("Stab", false);
                 forceJump = true;
             }

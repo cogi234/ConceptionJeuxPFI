@@ -64,16 +64,13 @@ public class missile : MonoBehaviour
         this.Joueur = Joueur;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.name == "Player")
+        if (other.gameObject.name == "Player")
         {
-            collision.gameObject.GetComponent<DamageableComponent>().TakeDamage(degat);
+            other.gameObject.GetComponent<DamageableComponent>().TakeDamage(degat);
             compteur = 0;
             gameObject.SetActive(false);
         }
     }
-
-
-
 }

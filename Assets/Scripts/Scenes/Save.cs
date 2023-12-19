@@ -107,5 +107,29 @@ public class Save : MonoBehaviour
         idataPersistantObjec = ChercherDataPersistant();
         sauvegarde();
     }
+    public  void scene1a2()
+    {
+
+        state.VieJoueur = 5;
+        state.VieBoss = 3;
+        state.CinématiqueenCour = true;
+        state.PositionJoueur = new Vector3 (3.04f, 26.23f, 463.18f);
+
+
+        string dir = Application.persistentDataPath + "/Saves";
+        Debug.Log(dir);
+        if (!Directory.Exists(dir))
+        {
+            Directory.CreateDirectory(dir);
+
+        }
+
+
+        string json = JsonUtility.ToJson(state);
+        File.WriteAllText(dir + "/save1.txt", json);
+        //
+
+
+    }
 
 }

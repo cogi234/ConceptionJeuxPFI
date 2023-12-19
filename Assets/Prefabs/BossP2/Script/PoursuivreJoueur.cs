@@ -33,8 +33,17 @@ public class PoursuivreJoueur : MonoBehaviour
 
     public void TakeDamage(int dommage)
     {
+        StartCoroutine(Death());
+    }
+
+    IEnumerator Death()
+    {
+        GetComponent<AudioSource>().Play();
+        agent.enabled = false;
+        yield return new WaitForSeconds(2);
         gameObject.SetActive(false);
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name == "Player")

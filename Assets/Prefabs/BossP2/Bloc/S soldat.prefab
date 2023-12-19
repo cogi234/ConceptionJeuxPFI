@@ -55,7 +55,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eda959f89b9cb3b4e928c579ca999ff0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HauteurChute: 40
+  HauteurChutee: 100
 --- !u!114 &926831403117740338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,10 +128,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 0.8
+  m_Height: 3
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.21, z: 0}
 --- !u!114 &1241456293739753326
 MonoBehaviour:
   m_ObjectHideFlags: 0

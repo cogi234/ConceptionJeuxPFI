@@ -6596,6 +6596,7 @@ GameObject:
   - component: {fileID: 391008559402157359}
   - component: {fileID: 4007625746142232168}
   - component: {fileID: 7467336635247645101}
+  - component: {fileID: -2822815325977250883}
   m_Layer: 0
   m_Name: WoodTrapp
   m_TagString: Untagged
@@ -7788,6 +7789,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+--- !u!114 &-2822815325977250883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2576339548459756094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &2576339548651416172
 GameObject:
   m_ObjectHideFlags: 0

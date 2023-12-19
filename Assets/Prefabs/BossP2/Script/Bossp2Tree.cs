@@ -233,7 +233,6 @@ namespace Anthony
 
         public override NodeState Evaluate()
         {
-            Debug.Log(Vector3.Distance(boss.position, joeur.position));
             State = NodeState.Failure;
             if (Vector3.Distance(boss.position, joeur.position) >= DistanceCac)
             {
@@ -281,7 +280,6 @@ namespace Anthony
            bool surboss = (Boolean)root.GetData("surboss");
            // bool millieu = (Boolean)root.GetData("millieu");
             bool peutAttaquer = (Boolean)root.GetData("peutAttaquer");
-            Debug.Log(distance);
            
             if (!peutAttaquer)
             {

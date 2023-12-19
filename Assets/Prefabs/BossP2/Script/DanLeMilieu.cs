@@ -12,13 +12,14 @@ public class DanLeMilieu : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-       
-        NodeBoss.SurBoss.JoueurSurBoss = true;
+        if (other.gameObject.name == "Player")
+            NodeBoss.SurBoss.JoueurSurBoss = true;
 
     }
 
     private void OnTriggerExit(Collider other)
     {
-        NodeBoss.SurBoss.JoueurSurBoss = false;
+        if (other.gameObject.name == "Player")
+            NodeBoss.SurBoss.JoueurSurBoss = false;
     }
 }

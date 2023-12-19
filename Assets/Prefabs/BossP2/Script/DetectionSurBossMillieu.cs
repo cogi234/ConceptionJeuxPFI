@@ -5,7 +5,6 @@ using UnityEngine;
 public class DetectionSurBossMillieu : MonoBehaviour
 {
 
-  
     Bossp2Composant NodeBoss;
     private void Start()
     {
@@ -14,15 +13,14 @@ public class DetectionSurBossMillieu : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-      
-
-        NodeBoss.DansMilieu.DansMillieu = true;
-
+        if (other.gameObject.name == "Player")
+            NodeBoss.DansMilieu.DansMillieu = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        NodeBoss.DansMilieu.DansMillieu = false;
+        if (other.gameObject.name == "Player")
+            NodeBoss.DansMilieu.DansMillieu = false;
     }
 
 

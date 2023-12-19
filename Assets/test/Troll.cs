@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Troll : MonoBehaviour
 {
-    public void troll (){
-
+    public void troll()
+    {
         if (true == true)
         {
             if (true == true)
@@ -55,13 +55,5 @@ public class Troll : MonoBehaviour
                 }
             }
         }
-
-
-
-
-
-
-
-
-        }
+    }
 }

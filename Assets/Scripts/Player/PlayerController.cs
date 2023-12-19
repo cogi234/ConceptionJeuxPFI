@@ -25,9 +25,9 @@ public class PlayerController : MonoBehaviour, Idatapersistant
     [SerializeField] float groundedRaycastLength;
     [SerializeField] LayerMask groundedRaycastLayers;
     [Header("Health")]
-    [SerializeField] float maxHealth = 5;
+    [SerializeField] int maxHealth = 5;
     [SerializeField] Slider healthBar;
-    float health;
+    int health;
     [Header("Stab")]
     [SerializeField] float stabRange = 1;
 
@@ -173,13 +173,18 @@ public class PlayerController : MonoBehaviour, Idatapersistant
             healthBar.value = health;
 
             if (health <= 0)
-                OnDeath();
+                StartCoroutine(OnDeath());
         }
     }
 
-    void OnDeath()
+    IEnumerator OnDeath()
     {
-        //TODO
+        GameObject.Find("FadeToBlack").GetComponent<FadeToBlack>().enabled = true;
+
+        yield return new WaitForSeconds(5);
+
+        //Ici une fois mort, on restart du debut 
+        GameObject.Find("SaveManager").GetComponent<Save>().NouvellePartie();
     }
 
 

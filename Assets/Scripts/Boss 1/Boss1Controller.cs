@@ -221,9 +221,7 @@ public class Boss1Controller : MonoBehaviour
         core.GetComponent<CoreMovement>().currentAction = CoreMovement.CoreAction.Nothing;
         core.GetComponent<DamageableComponent>().enabled = false;
 
-        //GameObject.Find("FadeToBlack").SetActive(true);
-
-        //Destroy(gameObject);
+        GameObject.Find("FadeToBlack").GetComponent<FadeToBlack>().enabled = true;
 
         yield return new WaitForSeconds(5);
 

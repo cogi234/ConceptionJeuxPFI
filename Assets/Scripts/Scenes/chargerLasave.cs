@@ -7,16 +7,11 @@ public class chargerLasave : MonoBehaviour
 {
     bool premierFrame = true;
     Save lasave;
-    // Start is called before the first frame update
     void Start()
     {
-      
         lasave = GetComponent<Save>();
-       
-      
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (premierFrame)
@@ -26,8 +21,6 @@ public class chargerLasave : MonoBehaviour
                 lasave.charger();
                 premierFrame = false;
             }
-
         }
-        
     }
 }

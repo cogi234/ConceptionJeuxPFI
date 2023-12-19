@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,6 +9,7 @@ public class PoursuivreJoueur : MonoBehaviour
    GameObject player;
     NavMeshAgent agent;
     bool activer = false;
+    int degat = 1;
 
     void Start()
     {
@@ -32,5 +34,13 @@ public class PoursuivreJoueur : MonoBehaviour
     public void TakeDamage(int dommage)
     {
         gameObject.SetActive(false);
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Player")
+        {
+            collision.gameObject.GetComponent<DamageableComponent>().TakeDamage(degat);
+            transform.parent.gameObject.SetActive(false);
+        }
     }
 }

@@ -20,7 +20,7 @@ public class Entrerp2 : MonoBehaviour
     BlocDownfall2[] BlocDownfallListsTab2 = new BlocDownfall2[0];
     Animator animator;
     AudioSource audioSource;
-    cin�matique cinematique;
+    cinématique cinematique;
     SpawnerEnnemi spawner;
     int ListeRequis;
     List<Camera> cameras = new List<Camera>();
@@ -39,7 +39,7 @@ public class Entrerp2 : MonoBehaviour
         cameras[1].enabled = false;
         cameras[0].enabled = true;
         spawner = GameObject.FindGameObjectWithTag("spawner").GetComponent<SpawnerEnnemi>();
-        spawner.cin�matique = true;
+        spawner.cinématique = true;
         Boss = GameObject.FindGameObjectWithTag("BossP2");
         animator= Boss.GetComponent<Animator>();
         audioSource = Boss.GetComponent<AudioSource>();
@@ -243,7 +243,7 @@ public class Entrerp2 : MonoBehaviour
         {
             cinematique.cinematique = false;
             GameObject.Find("Player").GetComponent<PlayerController>().immobile = false;
-            spawner.cin�matique = false;
+            spawner.cinématique = false;
             cameras[1].enabled = true ;
             cameras[0].enabled = false;
             UiCanvas.SetActive(true);
@@ -252,13 +252,13 @@ public class Entrerp2 : MonoBehaviour
     }
     public void charger(SceneStat data)
     {
-        cinematique.cinematique = data.Cin�matiqueenCour;
+        cinematique.cinematique = data.CinématiqueenCour;
 
     }
     public void sauvegarde(ref SceneStat data)
     {
 
-        data.Cin�matiqueenCour = cinematique.cinematique;
+        data.CinématiqueenCour = cinematique.cinematique;
 
 
     }

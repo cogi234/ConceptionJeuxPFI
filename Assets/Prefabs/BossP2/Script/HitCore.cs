@@ -17,12 +17,14 @@ public class HitCore : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.name != "Player")
+            return;
         Pv --;
 
         if (Pv <= 0)
             StartCoroutine(Death());
-
-        Tp();
+        else
+            Tp();
     }
     public void Tp()
     {

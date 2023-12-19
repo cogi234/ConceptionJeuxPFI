@@ -67,6 +67,20 @@ public class PlayerController : MonoBehaviour, Idatapersistant
         playerInput.FindAction("Sprint").performed += (InputAction.CallbackContext action) => sprinting = true;
     }
 
+    private void OnDestroy()
+    {
+        InputActionMap playerInput = inputAsset.FindActionMap("Player");
+        playerInput.FindAction("Move").performed -= MoveCall;
+        playerInput.FindAction("Move").canceled -= MoveCall;
+        playerInput.FindAction("Look").performed -= LookCall;
+        playerInput.FindAction("Attack").performed -= (InputAction.CallbackContext action) => animator.SetTrigger("Swing");
+        playerInput.FindAction("Jump").performed -= (InputAction.CallbackContext action) => jumping = true;
+        playerInput.FindAction("Jump").canceled -= (InputAction.CallbackContext action) => jumping = false;
+        playerInput.FindAction("Stab").performed -= StabCall;
+        playerInput.FindAction("Stab").canceled -= StabStop;
+        playerInput.FindAction("Sprint").performed -= (InputAction.CallbackContext action) => sprinting = true;
+    }
+
     private void LookCall(InputAction.CallbackContext action)
     {
         transform.Rotate(new Vector3(0, Time.deltaTime * mouseSensitivity * action.ReadValue<Vector2>().x));

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4405345242049918082}
   - component: {fileID: 2359631242264638560}
   - component: {fileID: -748410217408014101}
+  - component: {fileID: -5347051788634437353}
   m_Layer: 0
   m_Name: Z soldat
   m_TagString: Untagged
@@ -116,6 +117,25 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-5347051788634437353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3119974528851590985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d527f9adec514941be2c2585a4d09b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onHeal:
+    m_PersistentCalls:
+      m_Calls: []
+  invincibilityTime: 2
 --- !u!1001 &123092244589233721
 PrefabInstance:
   m_ObjectHideFlags: 0

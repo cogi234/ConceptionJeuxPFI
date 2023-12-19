@@ -8,14 +8,14 @@ public class PoursuivreJoueur : MonoBehaviour
    GameObject player;
     NavMeshAgent agent;
     bool activer = false;
-    // Start is called before the first frame update
+
     void Start()
     {
         player= GameObject.FindGameObjectWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
+        GetComponent<DamageableComponent>().onDamage.AddListener(TakeDamage);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (activer)
@@ -29,17 +29,8 @@ public class PoursuivreJoueur : MonoBehaviour
         activer = true;
     }
 
-
     public void TakeDamage(int dommage)
     {
         gameObject.SetActive(false);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        //if(other.tag == "sword")
-        //{
-            gameObject.SetActive(false);
-       // }
-    }
-
 }

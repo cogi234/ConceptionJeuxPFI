@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3406312079441607204}
   - component: {fileID: 901991272630101404}
   - component: {fileID: -3739285072483614910}
+  - component: {fileID: -3563474489928868821}
   m_Layer: 0
   m_Name: T Soldat
   m_TagString: Untagged
@@ -96,6 +97,25 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-3563474489928868821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3957654362270690736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d527f9adec514941be2c2585a4d09b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onHeal:
+    m_PersistentCalls:
+      m_Calls: []
+  invincibilityTime: 2
 --- !u!1001 &1168588838472179413
 PrefabInstance:
   m_ObjectHideFlags: 0

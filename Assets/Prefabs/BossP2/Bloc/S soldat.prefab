@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2696237732098477269}
   - component: {fileID: 8224182280763314740}
   - component: {fileID: 2435550868043559197}
+  - component: {fileID: 1241456293739753326}
   m_Layer: 0
   m_Name: S soldat
   m_TagString: Untagged
@@ -130,6 +131,25 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1241456293739753326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8433966216417154676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d527f9adec514941be2c2585a4d09b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onHeal:
+    m_PersistentCalls:
+      m_Calls: []
+  invincibilityTime: 2
 --- !u!1001 &85533173774656553
 PrefabInstance:
   m_ObjectHideFlags: 0

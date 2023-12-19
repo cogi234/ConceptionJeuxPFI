@@ -23,8 +23,8 @@ public class HitCore : MonoBehaviour
 
         if (Pv <= 0)
             StartCoroutine(Death());
-
-        Tp();
+        else
+            Tp();
     }
     public void Tp()
     {

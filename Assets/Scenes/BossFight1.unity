@@ -918,6 +918,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1077741472}
+    - target: {fileID: 7940893501706271031, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
+      propertyPath: initialJumpForce
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940893501706271031, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
+      propertyPath: continuousJumpForce
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 9105075800246197071, guid: a02881d4f6fc1224e95694964f335b8f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -943,7 +951,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &982288220
 AudioSource:
   m_ObjectHideFlags: 0
